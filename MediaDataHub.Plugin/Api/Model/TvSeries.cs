@@ -69,6 +69,9 @@ public class TvSeries : Record, IRemoteSearchResult, IRemoteImageInfo
 
   [JsonPropertyName("logos")]
   public IEnumerable<string> Logos { get; set; } = Array.Empty<string>();
+
+  [JsonPropertyName("thumbnails")]
+  public IEnumerable<string> Thumbnails { get; set; } = Array.Empty<string>();
   protected IEnumerable<string> ImageUrls => Posters;
   public string? Overview => Description;
   public DateTime? PremiereDate => FirstAirDate;
@@ -77,7 +80,8 @@ public class TvSeries : Record, IRemoteSearchResult, IRemoteImageInfo
     { ImageType.Primary, Posters },
     { ImageType.Backdrop, Backdrop },
     { ImageType.Banner, Banners },
-    { ImageType.Logo, Logos }
+    { ImageType.Logo, Logos },
+    { ImageType.Thumb, Thumbnails }
   };
 }
 

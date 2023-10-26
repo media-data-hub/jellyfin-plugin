@@ -45,6 +45,9 @@ public class TvEpisode : Record, IRemoteSearchResult, IRemoteImageInfo
   [JsonPropertyName("logos")]
   public IEnumerable<string> Logos { get; set; } = Array.Empty<string>();
 
+  [JsonPropertyName("thumbnails")]
+  public IEnumerable<string> Thumbnails { get; set; } = Array.Empty<string>();
+
   [JsonPropertyName("order")]
   public int Order { get; set; }
 
@@ -58,7 +61,8 @@ public class TvEpisode : Record, IRemoteSearchResult, IRemoteImageInfo
     { ImageType.Primary, Posters },
     { ImageType.Backdrop, Backdrop },
     { ImageType.Banner, Banners },
-    { ImageType.Logo, Logos }
+    { ImageType.Logo, Logos },
+    { ImageType.Thumb, Thumbnails }
   };
 }
 
