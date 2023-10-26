@@ -1,0 +1,43 @@
+name: release
+on:
+  pull_request:
+    branches:
+      - master
+    types:
+      - closed
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    if: "github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'autorelease: pending')"
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: google-github-actions/release-please-action@v3
+        id: release
+        with:
+          release-type: simple
+      - uses: actions/checkout@v3
+        if: ${{ steps.release.outputs.release_created }}
+      - uses: actions/setup-dotnet@v3
+        if: ${{ steps.release.outputs.release_created }}
+        with:
+          dotnet-version: 6.0.x
+      - run: |
+          PUBLISH_VERSION=${{ steps.release.outputs.tag_name }}
+          echo "PUBLISH_VERSION=${PUBLISH_VERSION#v}" >> $GITHUB_ENV
+        if: ${{ steps.release.outputs.release_created }}
+      - run: dotnet publish --configuration Release MediaDataHubPlugin.sln /property:GenerateFullPaths=true /consoleloggerparameters:NoSummary /property:Version=${PUBLISH_VERSION}
+        if: ${{ steps.release.outputs.release_created }}
+      - run: sudo apt-get install -y jq
+        if: ${{ steps.release.outputs.release_created }}
+      - run: |
+          jq -c ".version = \"${PUBLISH_VERSION}\" | .timestamp = \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\"" meta.template.json  > meta.json
+          mv ./MediaDataHub.Plugin/bin/Release/net6.0/publish/MediaDataHub.Plugin.dll MediaDataHub.Plugin.dll
+          zip -r media-data-hub.zip meta.json MediaDataHub.Plugin.dll
+          md5sum media-data-hub.zip | head -c 32 > checksum
+        if: ${{ steps.release.outputs.release_created }}
+      - run: gh release upload ${{ steps.release.outputs.tag_name }} media-data-hub.zip checksum
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: ${{ steps.release.outputs.release_created }}

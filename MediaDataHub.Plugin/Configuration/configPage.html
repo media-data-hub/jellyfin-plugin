@@ -1,0 +1,152 @@
+<div
+  id="MediaDataHubConfigPage"
+  data-role="page"
+  class="page type-interior pluginConfigurationPage"
+  data-require="emby-input,emby-button,emby-select,emby-checkbox"
+>
+  <div data-role="content">
+    <div class="content-primary">
+      <h1>Media Data Hub</h1>
+      <form id="MediaDataHubConfigForm">
+        <div class="verticalSection verticalSection-extrabottompadding">
+          <h2>Basic</h2>
+          <div class="inputContainer">
+            <label class="inputLabel inputLabelUnfocused" for="Host">
+              Host
+            </label>
+            <input
+              id="Host"
+              name="Host"
+              type="text"
+              is="emby-input"
+              placeholder="https://example.com"
+            />
+            <div class="fieldDescription">
+              Address of Media Data Hub. It should be accessible from Jellyfin
+              Host
+            </div>
+          </div>
+          <div class="inputContainer">
+            <label class="inputLabel inputLabelUnfocused" for="Identity">
+              Identity
+            </label>
+            <input id="Identity" name="Identity" type="text" is="emby-input" />
+            <div class="fieldDescription">
+              Identity of user. A non-admin user should be created at "user"
+              collection.
+            </div>
+          </div>
+          <div class="inputContainer">
+            <label class="inputLabel inputLabelUnfocused" for="Password">
+              Password
+            </label>
+            <input
+              id="Password"
+              name="Password"
+              type="password"
+              is="emby-input"
+            />
+            <div class="fieldDescription">Password of user.</div>
+          </div>
+          <div class="verticalSection verticalSection-extrabottompadding">
+            <h2>Update Collections Task</h2>
+            <div class="checkboxContainer checkboxContainer-withDescription">
+              <label class="emby-checkbox-label">
+                <input
+                  id="AutoAddToCollection"
+                  name="AutoAddToCollection"
+                  is="emby-checkbox"
+                  type="checkbox"
+                />
+                <span>Add media to collection.</span>
+              </label>
+              <div class="fieldDescription checkboxFieldDescription">
+                Will add media to collection when it is found or created.
+              </div>
+            </div>
+            <div class="checkboxContainer checkboxContainer-withDescription">
+              <label class="emby-checkbox-label">
+                <input
+                  id="AutoConnectCollection"
+                  name="AutoConnectCollection"
+                  is="emby-checkbox"
+                  type="checkbox"
+                />
+                <span>Match collection by name.</span>
+              </label>
+              <div class="fieldDescription checkboxFieldDescription">
+                Will match Media Data Hub collection to Jellyfin collection by
+                name.
+              </div>
+            </div>
+            <div class="checkboxContainer checkboxContainer-withDescription">
+              <label class="emby-checkbox-label">
+                <input
+                  id="AutoCreateCollection"
+                  name="AutoCreateCollection"
+                  is="emby-checkbox"
+                  type="checkbox"
+                />
+                <span>Create missing collection.</span>
+              </label>
+              <div class="fieldDescription checkboxFieldDescription">
+                Will create missing collection when collection is not found.
+              </div>
+            </div>
+          </div>
+          <div>
+            <button
+              is="emby-button"
+              type="submit"
+              class="raised button-submit block emby-button"
+            >
+              <span>Save</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script type="text/javascript">
+    const MediaDataHubConfig = {
+      pluginId: "88ce23bd-f56f-4269-9949-e734326e9797"
+    };
+    document
+      .querySelector("#MediaDataHubConfigPage")
+      .addEventListener("pageshow", async function () {
+        Dashboard.showLoadingMsg();
+        const id = MediaDataHubConfig.pluginId;
+        const config = await ApiClient.getPluginConfiguration(id);
+        document.querySelector("#Host").value = config.Host;
+        document.querySelector("#Identity").value = config.Identity;
+        document.querySelector("#Password").value = config.Password;
+        document.querySelector("#AutoAddToCollection").checked =
+          config.AutoAddToCollection || false;
+        document.querySelector("#AutoConnectCollection").checked =
+          config.AutoConnectCollection || false;
+        document.querySelector("#AutoCreateCollection").checked =
+          config.AutoCreateCollection || false;
+        Dashboard.hideLoadingMsg();
+      });
+
+    document
+      .querySelector("#MediaDataHubConfigForm")
+      .addEventListener("submit", async function (e) {
+        e.preventDefault();
+        Dashboard.showLoadingMsg();
+        const id = MediaDataHubConfig.pluginId;
+        const config = await ApiClient.getPluginConfiguration(id);
+        config.Host = document.querySelector("#Host").value;
+        config.Identity = document.querySelector("#Identity").value;
+        config.Password = document.querySelector("#Password").value;
+        config.AutoAddToCollection =
+          document.querySelector("#AutoAddToCollection").checked || false;
+        config.AutoConnectCollection =
+          document.querySelector("#AutoConnectCollection").checked || false;
+        config.AutoCreateCollection =
+          document.querySelector("#AutoCreateCollection").checked || false;
+        const result = await ApiClient.updatePluginConfiguration(id, config);
+        Dashboard.processPluginConfigurationUpdateResult(result);
+      });
+  </script>
+</div>

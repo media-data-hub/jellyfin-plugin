@@ -1,0 +1,12 @@
+{
+  "category": "Metadata",
+  "changelog": "See CHANGELOG.md",
+  "description": "Read metadata from Media Data Hub",
+  "guid": "88ce23bd-f56f-4269-9949-e734326e9797",
+  "name": "Media Data Hub",
+  "overview": "Read metadata from Media Data Hub",
+  "owner": "Joshua Avalon",
+  "targetAbi": "10.8.11.0",
+  "timestamp": "2023-10-26T14:17:24+08:00Z",
+  "version": "1.0.0"
+}
