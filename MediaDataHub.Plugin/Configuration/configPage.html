@@ -110,43 +110,43 @@
   <script type="text/javascript">
     (function () {
       const pluginId = "88ce23bd-f56f-4269-9949-e734326e9797";
-      document
-        .querySelector("#MediaDataHubConfigPage")
-        .addEventListener("pageshow", async function () {
+      const pages = document.querySelector("#MediaDataHubConfigPage");
+      pages.forEach((page) => {
+        page.addEventListener("pageshow", async function () {
           Dashboard.showLoadingMsg();
           const config = await ApiClient.getPluginConfiguration(pluginId);
-          document.querySelector("#Host").value = config.Host;
-          document.querySelector("#Identity").value = config.Identity;
-          document.querySelector("#Password").value = config.Password;
-          document.querySelector("#AutoAddToCollection").checked =
+          page.querySelector("#Host").value = config.Host;
+          page.querySelector("#Identity").value = config.Identity;
+          page.querySelector("#Password").value = config.Password;
+          page.querySelector("#AutoAddToCollection").checked =
             config.AutoAddToCollection || false;
-          document.querySelector("#AutoConnectCollection").checked =
+          page.querySelector("#AutoConnectCollection").checked =
             config.AutoConnectCollection || false;
-          document.querySelector("#AutoCreateCollection").checked =
+          page.querySelector("#AutoCreateCollection").checked =
             config.AutoCreateCollection || false;
           Dashboard.hideLoadingMsg();
         });
-      document
-        .querySelector("#MediaDataHubConfigForm")
-        .addEventListener("submit", async function (e) {
+        const form = page.querySelector("#MediaDataHubConfigForm");
+        form.addEventListener("submit", async function (e) {
           e.preventDefault();
           Dashboard.showLoadingMsg();
           const config = await ApiClient.getPluginConfiguration(pluginId);
-          config.Host = document.querySelector("#Host").value;
-          config.Identity = document.querySelector("#Identity").value;
-          config.Password = document.querySelector("#Password").value;
+          config.Host = page.querySelector("#Host").value;
+          config.Identity = page.querySelector("#Identity").value;
+          config.Password = page.querySelector("#Password").value;
           config.AutoAddToCollection =
-            document.querySelector("#AutoAddToCollection").checked || false;
+            page.querySelector("#AutoAddToCollection").checked || false;
           config.AutoConnectCollection =
-            document.querySelector("#AutoConnectCollection").checked || false;
+            page.querySelector("#AutoConnectCollection").checked || false;
           config.AutoCreateCollection =
-            document.querySelector("#AutoCreateCollection").checked || false;
+            page.querySelector("#AutoCreateCollection").checked || false;
           const result = await ApiClient.updatePluginConfiguration(
             pluginId,
             config
           );
           Dashboard.processPluginConfigurationUpdateResult(result);
         });
+      });
     })();
   </script>
 </div>
