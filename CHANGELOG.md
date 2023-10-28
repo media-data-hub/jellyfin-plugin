@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/media-data-hub/jellyfin-plugin/compare/v1.1.4...v1.2.0) (2023-10-28)
+
+
+### Features
+
+* add studio image provider ([fc19ece](https://github.com/media-data-hub/jellyfin-plugin/commit/fc19ece3f958eaa9bf25e30096f8cee41b5ffd70))
+
 ## [1.1.4](https://github.com/media-data-hub/jellyfin-plugin/compare/v1.1.3...v1.1.4) (2023-10-28)
 
 
