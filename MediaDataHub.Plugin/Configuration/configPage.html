@@ -108,45 +108,45 @@
     </div>
   </div>
   <script type="text/javascript">
-    const MediaDataHubConfig = {
-      pluginId: "88ce23bd-f56f-4269-9949-e734326e9797"
-    };
-    document
-      .querySelector("#MediaDataHubConfigPage")
-      .addEventListener("pageshow", async function () {
-        Dashboard.showLoadingMsg();
-        const id = MediaDataHubConfig.pluginId;
-        const config = await ApiClient.getPluginConfiguration(id);
-        document.querySelector("#Host").value = config.Host;
-        document.querySelector("#Identity").value = config.Identity;
-        document.querySelector("#Password").value = config.Password;
-        document.querySelector("#AutoAddToCollection").checked =
-          config.AutoAddToCollection || false;
-        document.querySelector("#AutoConnectCollection").checked =
-          config.AutoConnectCollection || false;
-        document.querySelector("#AutoCreateCollection").checked =
-          config.AutoCreateCollection || false;
-        Dashboard.hideLoadingMsg();
-      });
-
-    document
-      .querySelector("#MediaDataHubConfigForm")
-      .addEventListener("submit", async function (e) {
-        e.preventDefault();
-        Dashboard.showLoadingMsg();
-        const id = MediaDataHubConfig.pluginId;
-        const config = await ApiClient.getPluginConfiguration(id);
-        config.Host = document.querySelector("#Host").value;
-        config.Identity = document.querySelector("#Identity").value;
-        config.Password = document.querySelector("#Password").value;
-        config.AutoAddToCollection =
-          document.querySelector("#AutoAddToCollection").checked || false;
-        config.AutoConnectCollection =
-          document.querySelector("#AutoConnectCollection").checked || false;
-        config.AutoCreateCollection =
-          document.querySelector("#AutoCreateCollection").checked || false;
-        const result = await ApiClient.updatePluginConfiguration(id, config);
-        Dashboard.processPluginConfigurationUpdateResult(result);
-      });
+    (function () {
+      const pluginId = "88ce23bd-f56f-4269-9949-e734326e9797";
+      document
+        .querySelector("#MediaDataHubConfigPage")
+        .addEventListener("pageshow", async function () {
+          Dashboard.showLoadingMsg();
+          const config = await ApiClient.getPluginConfiguration(pluginId);
+          document.querySelector("#Host").value = config.Host;
+          document.querySelector("#Identity").value = config.Identity;
+          document.querySelector("#Password").value = config.Password;
+          document.querySelector("#AutoAddToCollection").checked =
+            config.AutoAddToCollection || false;
+          document.querySelector("#AutoConnectCollection").checked =
+            config.AutoConnectCollection || false;
+          document.querySelector("#AutoCreateCollection").checked =
+            config.AutoCreateCollection || false;
+          Dashboard.hideLoadingMsg();
+        });
+      document
+        .querySelector("#MediaDataHubConfigForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+          Dashboard.showLoadingMsg();
+          const config = await ApiClient.getPluginConfiguration(pluginId);
+          config.Host = document.querySelector("#Host").value;
+          config.Identity = document.querySelector("#Identity").value;
+          config.Password = document.querySelector("#Password").value;
+          config.AutoAddToCollection =
+            document.querySelector("#AutoAddToCollection").checked || false;
+          config.AutoConnectCollection =
+            document.querySelector("#AutoConnectCollection").checked || false;
+          config.AutoCreateCollection =
+            document.querySelector("#AutoCreateCollection").checked || false;
+          const result = await ApiClient.updatePluginConfiguration(
+            pluginId,
+            config
+          );
+          Dashboard.processPluginConfigurationUpdateResult(result);
+        });
+    })();
   </script>
 </div>
