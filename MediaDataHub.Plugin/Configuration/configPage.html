@@ -110,7 +110,7 @@
   <script type="text/javascript">
     (function () {
       const pluginId = "88ce23bd-f56f-4269-9949-e734326e9797";
-      const pages = document.querySelector("#MediaDataHubConfigPage");
+      const pages = document.querySelectorAll("#MediaDataHubConfigPage");
       pages.forEach((page) => {
         page.addEventListener("pageshow", async function () {
           Dashboard.showLoadingMsg();
