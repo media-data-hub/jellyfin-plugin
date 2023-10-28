@@ -14,4 +14,5 @@ public static class Collections
   public const string TvSeasonStaff = "tvSeasonStaff";
   public const string TvEpisode = "tvEpisode";
   public const string TvEpisodeStaff = "tvEpisodeStaff";
+  public const string Studio = "studio";
 }
