@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/media-data-hub/jellyfin-plugin/compare/v1.1.1...v1.1.2) (2023-10-28)
+
+
+### Bug Fixes
+
+* fix js ([f19c7cb](https://github.com/media-data-hub/jellyfin-plugin/commit/f19c7cba54e7734b2b3b6ebad5ecf0a86d29ce45))
+
 ## [1.1.1](https://github.com/media-data-hub/jellyfin-plugin/compare/v1.1.0...v1.1.1) (2023-10-27)
 
 
