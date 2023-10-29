@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/media-data-hub/jellyfin-plugin/compare/v1.2.0...v1.2.1) (2023-10-29)
+
+
+### Bug Fixes
+
+* remove year from name during matching ([cf005b0](https://github.com/media-data-hub/jellyfin-plugin/commit/cf005b0e12b3fdfe9dcab66208ff49405158df2d))
+
 ## [1.2.0](https://github.com/media-data-hub/jellyfin-plugin/compare/v1.1.4...v1.2.0) (2023-10-28)
 
 
