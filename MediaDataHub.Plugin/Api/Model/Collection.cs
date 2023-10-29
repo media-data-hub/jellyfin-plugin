@@ -47,7 +47,7 @@ public class Collection : Record, IRemoteSearchResult, IRemoteImageInfo, ICollec
 
   [JsonPropertyName("rating")]
   public float Rating { get; set; }
-  protected IEnumerable<string> ImageUrls => Posters;
+  public IEnumerable<string> ImageUrls => Posters;
   public string? Overview => Description;
   public DateTime? PremiereDate => ReleaseDate;
   public int? ProductionYear => ReleaseDate.Year;

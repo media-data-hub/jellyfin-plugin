@@ -39,7 +39,7 @@ public class Studio : Record, IRemoteImageInfo
 
   [JsonPropertyName("thumbnails")]
   public IEnumerable<string> Thumbnails { get; set; } = Array.Empty<string>();
-  protected IEnumerable<string> ImageUrls => Posters;
+  public IEnumerable<string> ImageUrls => Posters;
   public Dictionary<ImageType, IEnumerable<string>> RemoteImages => new() {
     { ImageType.Primary, Posters },
     { ImageType.Backdrop, Backdrop },

@@ -34,6 +34,6 @@ public class StaffDetail : Staff, IPersonInfo
   public string Role => Expand.Role.Name;
   public string Type => Expand.Role.Jellyfin;
   public int? SortOrder => Priority;
-  protected IEnumerable<string> ImageUrls => Expand.Person.Avatars;
+  public IEnumerable<string> ImageUrls => Expand.Person.Avatars;
   public Dictionary<string, string> ProviderIds => new() { { Plugin.ProviderId, Expand.Person.Id } };
 }

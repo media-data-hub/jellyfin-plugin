@@ -36,7 +36,7 @@ public class Person : Record, IRemoteSearchResult, IRemoteImageInfo
 
   [JsonPropertyName("tags")]
   public IEnumerable<string> TagIds { get; set; } = Array.Empty<string>();
-  protected IEnumerable<string> ImageUrls => Avatars;
+  public IEnumerable<string> ImageUrls => Avatars;
   public string? Overview => Description;
   public DateTime? PremiereDate => Dob;
   public int? ProductionYear => Dob?.Year;

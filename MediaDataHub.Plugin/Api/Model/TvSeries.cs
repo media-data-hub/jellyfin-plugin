@@ -72,7 +72,7 @@ public class TvSeries : Record, IRemoteSearchResult, IRemoteImageInfo
 
   [JsonPropertyName("thumbnails")]
   public IEnumerable<string> Thumbnails { get; set; } = Array.Empty<string>();
-  protected IEnumerable<string> ImageUrls => Posters;
+  public IEnumerable<string> ImageUrls => Posters;
   public string? Overview => Description;
   public DateTime? PremiereDate => FirstAirDate;
   public int? ProductionYear => FirstAirDate.Year;

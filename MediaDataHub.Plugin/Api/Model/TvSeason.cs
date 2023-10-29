@@ -62,7 +62,7 @@ public class TvSeason : Record, IRemoteSearchResult, IRemoteImageInfo
 
   [JsonPropertyName("tvSeries")]
   public string TvSeriesId { get; set; } = "";
-  protected IEnumerable<string> ImageUrls => Posters;
+  public IEnumerable<string> ImageUrls => Posters;
   public string? Overview => Description;
   public DateTime? PremiereDate => AirDate;
   public int? ProductionYear => AirDate.Year;
