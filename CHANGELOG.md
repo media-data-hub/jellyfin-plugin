@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/media-data-hub/jellyfin-plugin/compare/v1.2.1...v1.3.0) (2023-10-29)
+
+
+### Features
+
+* add banners, logos, thumbnail to collection ([c20f1bf](https://github.com/media-data-hub/jellyfin-plugin/commit/c20f1bf30431e142265345c4833541024b00d183))
+
 ## [1.2.1](https://github.com/media-data-hub/jellyfin-plugin/compare/v1.2.0...v1.2.1) (2023-10-29)
 
 
