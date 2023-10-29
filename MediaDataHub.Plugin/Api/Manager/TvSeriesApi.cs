@@ -21,6 +21,11 @@ public partial class MediaDataHubApiManager : ITvSeriesApi
       JoinFirstAirDateFilter($"name='{name}' || sortName='{name}'", year),
       JoinFirstAirDateFilter($"name~'{name}' || sortName~'{name}'", year),
     };
+    if (year != null && name.EndsWith($"({year})"))
+    {
+      var trim = name[..name.LastIndexOf($"({year})")].TrimEnd();
+      filters.Insert(0, JoinFirstAirDateFilter($"matchName='{trim}'", year));
+    }
     var nameTokens = name.Split();
     if (nameTokens.Length > 1)
     {
