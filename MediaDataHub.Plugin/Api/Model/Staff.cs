@@ -35,5 +35,13 @@ public class StaffDetail : Staff, IPersonInfo
   public string Type => Expand.Role.Jellyfin;
   public int? SortOrder => Priority;
   public IEnumerable<string> ImageUrls => Expand.Person.Avatars;
+  public string? ImageUrl
+  {
+    get
+    {
+      var url = ImageUrls.FirstOrDefault();
+      return url != null ? MediaDataHubUtils.GetFileUrl(Expand.Person, url) : null;
+    }
+  }
   public Dictionary<string, string> ProviderIds => new() { { Plugin.ProviderId, Expand.Person.Id } };
 }
