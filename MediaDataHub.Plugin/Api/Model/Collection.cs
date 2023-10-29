@@ -29,6 +29,15 @@ public class Collection : Record, IRemoteSearchResult, IRemoteImageInfo, ICollec
   [JsonPropertyName("backdrop")]
   public IEnumerable<string> Backdrop { get; set; } = Array.Empty<string>();
 
+  [JsonPropertyName("banners")]
+  public IEnumerable<string> Banners { get; set; } = Array.Empty<string>();
+
+  [JsonPropertyName("logos")]
+  public IEnumerable<string> Logos { get; set; } = Array.Empty<string>();
+
+  [JsonPropertyName("thumbnails")]
+  public IEnumerable<string> Thumbnails { get; set; } = Array.Empty<string>();
+
   [JsonPropertyName("releaseDate")]
   [JsonConverter(typeof(DateTimeFormatConverter))]
   public DateTime ReleaseDate { get; set; }
@@ -44,7 +53,10 @@ public class Collection : Record, IRemoteSearchResult, IRemoteImageInfo, ICollec
   public int? ProductionYear => ReleaseDate.Year;
   public Dictionary<ImageType, IEnumerable<string>> RemoteImages => new() {
     { ImageType.Primary, Posters },
-    { ImageType.Backdrop, Backdrop }
+    { ImageType.Backdrop, Backdrop },
+    { ImageType.Banner, Banners },
+    { ImageType.Logo, Logos },
+    { ImageType.Thumb, Thumbnails }
   };
 }
 
