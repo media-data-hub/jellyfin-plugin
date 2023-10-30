@@ -17,6 +17,7 @@ public partial class MediaDataHubApiManager : IPersonApi
   public Task<IEnumerable<Person>> SearchPeople(string name, int? year, CancellationToken cancellationToken)
   {
     var filters = new List<string> {
+      JoinDobFilter($"matchName='{name}'", year),
       JoinDobFilter($"name='{name}' || sortName='{name}'", year),
       JoinDobFilter($"name~'{name}' || sortName~'{name}'", year),
     };

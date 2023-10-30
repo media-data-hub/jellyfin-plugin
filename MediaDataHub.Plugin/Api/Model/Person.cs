@@ -14,6 +14,9 @@ public class Person : Record, IRemoteSearchResult, IRemoteImageInfo
   [JsonPropertyName("sortName")]
   public string SortName { get; set; } = "";
 
+  [JsonPropertyName("matchName")]
+  public string MatchName { get; set; } = "";
+
   [JsonPropertyName("description")]
   public string Description { get; set; } = "";
 
