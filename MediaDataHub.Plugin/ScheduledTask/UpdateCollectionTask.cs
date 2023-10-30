@@ -2,6 +2,7 @@ using Microsoft.Extensions.Logging;
 using Jellyfin.Data.Enums;
 using MediaBrowser.Controller.Collections;
 using MediaBrowser.Controller.Entities;
+using MediaBrowser.Controller.Entities.Audio;
 using MediaBrowser.Controller.Entities.Movies;
 using MediaBrowser.Controller.Entities.TV;
 using MediaBrowser.Controller.Library;
@@ -22,7 +23,7 @@ public class UpdateCollectionTask : IScheduledTask
   private readonly MediaDataHubApiManager _apiManager;
   public string Name => "Update Collections";
   public string Key => "MediaDataHub.UpdateCollectionTask";
-  public string Description => "Add Tv series and movies to collections";
+  public string Description => "Add Tv series and movies and albums to collections";
   public string Category => "Media Data Hub";
 
   public UpdateCollectionTask(
@@ -47,7 +48,7 @@ public class UpdateCollectionTask : IScheduledTask
     }
     var query = new InternalItemsQuery
     {
-      IncludeItemTypes = new[] { BaseItemKind.Movie, BaseItemKind.Series },
+      IncludeItemTypes = new[] { BaseItemKind.Movie, BaseItemKind.Series, BaseItemKind.MusicAlbum },
       IsVirtualItem = false,
       Recursive = true
     };
@@ -71,6 +72,10 @@ public class UpdateCollectionTask : IScheduledTask
           case Series series:
             var tvSeriesDetail = await _apiManager.GetTvSeriesDetailById(id, cancellationToken).ConfigureAwait(false);
             collections = tvSeriesDetail.Expand.Collections;
+            break;
+          case MusicAlbum series:
+            var musicAlbumDetail = await _apiManager.GetMusicAlbumDetailById(id, cancellationToken).ConfigureAwait(false);
+            collections = musicAlbumDetail.Expand.Collections;
             break;
           default:
             continue;
