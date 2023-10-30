@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/media-data-hub/jellyfin-plugin/compare/v1.4.0...v1.4.1) (2023-10-30)
+
+
+### Bug Fixes
+
+* fix StudioImageProvider logger ([9b99361](https://github.com/media-data-hub/jellyfin-plugin/commit/9b993611b5801c0bbf17ebbcf74c1c4288a7f491))
+
 ## [1.4.0](https://github.com/media-data-hub/jellyfin-plugin/compare/v1.3.1...v1.4.0) (2023-10-30)
 
 
