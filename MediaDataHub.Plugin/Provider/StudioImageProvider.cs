@@ -13,10 +13,10 @@ public class StudioImageProvider : IRemoteImageProvider
 {
   private readonly MediaDataHubApiManager _apiManager;
   protected readonly IHttpClientFactory _httpClientFactory;
-  protected readonly ILogger _logger;
+  protected readonly ILogger<StudioImageProvider> _logger;
 
   public StudioImageProvider(
-    ILogger logger,
+    ILogger<StudioImageProvider> logger,
     IHttpClientFactory httpClientFactory,
     MediaDataHubApiManager apiManager
   )
