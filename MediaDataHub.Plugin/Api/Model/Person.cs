@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using MediaBrowser.Controller.Entities.Audio;
 using Entities = MediaBrowser.Controller.Entities;
 using MediaBrowser.Controller.Providers;
 using MediaBrowser.Model.Entities;
@@ -58,7 +59,7 @@ public class PersonExpand
   public IEnumerable<Tag> Tags { get; set; } = Array.Empty<Tag>();
 }
 
-public class PersonDetail : Person, IMetadataResult<Entities.Person, PersonLookupInfo>
+public class PersonDetail : Person, IMetadataResult<Entities.Person, PersonLookupInfo>, IMetadataResult<MusicArtist, ArtistInfo>
 {
   [JsonIgnore]
   public static readonly IDictionary<string, string?> Query = new Dictionary<string, string?>() { { "expand", "country,tags" } };
