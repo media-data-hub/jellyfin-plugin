@@ -9,7 +9,7 @@ using Model = MediaDataHub.Plugin.Api.Model;
 
 namespace MediaDataHub.Plugin.Provider;
 
-public abstract class StudioImageProvider : IRemoteImageProvider
+public class StudioImageProvider : IRemoteImageProvider
 {
   private readonly MediaDataHubApiManager _apiManager;
   protected readonly IHttpClientFactory _httpClientFactory;
@@ -32,7 +32,7 @@ public abstract class StudioImageProvider : IRemoteImageProvider
   /// <inheritdoc />
   public Task<HttpResponseMessage> GetImageResponse(string url, CancellationToken cancellationToken) => _httpClientFactory.CreateClient().GetAsync(url, cancellationToken);
 
-  public abstract IEnumerable<ImageType> GetSupportedImages(BaseItem item);
+  public IEnumerable<ImageType> GetSupportedImages(BaseItem item) => new[] { ImageType.Primary, ImageType.Backdrop, ImageType.Banner, ImageType.Logo, ImageType.Thumb };
 
   public async Task<IEnumerable<RemoteImageInfo>> GetImages(BaseItem item, CancellationToken cancellationToken)
   {

@@ -40,5 +40,5 @@ public class BoxSetProvider : MediaDataHubProvider<Model.Collection, BoxSet, Box
     return _apiManager.SearchCollections(info.Name, cancellationToken);
   }
 
-  public override IEnumerable<ImageType> GetSupportedImages(BaseItem item) => new[] { ImageType.Primary, ImageType.Backdrop };
+  public override IEnumerable<ImageType> GetSupportedImages(BaseItem item) => new[] { ImageType.Primary, ImageType.Backdrop, ImageType.Banner, ImageType.Logo, ImageType.Thumb };
 }

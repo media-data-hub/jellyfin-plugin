@@ -32,7 +32,7 @@ jobs:
       - run: sudo apt-get install -y jq
         if: ${{ steps.release.outputs.release_created }}
       - run: |
-          jq -c ".version = \"${PUBLISH_VERSION}\" | .timestamp = \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\"" meta.template.json  > meta.json
+          jq -c ".version = \"${PUBLISH_VERSION}\" | .timestamp = \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\"" meta.template.json > meta.json
           mv ./MediaDataHub.Plugin/bin/Release/net6.0/publish/MediaDataHub.Plugin.dll MediaDataHub.Plugin.dll
           zip -r media-data-hub.zip meta.json MediaDataHub.Plugin.dll
           md5sum media-data-hub.zip | head -c 32 > checksum

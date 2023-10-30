@@ -64,5 +64,5 @@ public class TvSeasonProvider : MediaDataHubBaseProvider<Model.TvSeason, Season,
     return _apiManager.GetTvSeasonById(id, cancellationToken);
   }
 
-  public override IEnumerable<ImageType> GetSupportedImages(BaseItem item) => new[] { ImageType.Primary, ImageType.Backdrop, ImageType.Banner, ImageType.Logo };
+  public override IEnumerable<ImageType> GetSupportedImages(BaseItem item) => new[] { ImageType.Primary, ImageType.Backdrop, ImageType.Banner, ImageType.Logo, ImageType.Thumb };
 }
