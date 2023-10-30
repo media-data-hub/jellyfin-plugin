@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.4.0](https://github.com/media-data-hub/jellyfin-plugin/compare/v1.3.1...v1.4.0) (2023-10-30)
+
+
+### Features
+
+* add matchName to person ([2a352e8](https://github.com/media-data-hub/jellyfin-plugin/commit/2a352e81e3e68b7f4b0f4b4793aa72d41f0f353d))
+* add music library support ([27fad52](https://github.com/media-data-hub/jellyfin-plugin/commit/27fad528364c968662c7bb4b8ed3876c628bbc8c))
+* map artist to person ([dbdae05](https://github.com/media-data-hub/jellyfin-plugin/commit/dbdae0564e9e0e6b180608839c4804baebd116f5))
+
+
+### Bug Fixes
+
+* fix missing image support type ([5d8fa0f](https://github.com/media-data-hub/jellyfin-plugin/commit/5d8fa0fa6e56af42a47be8855a44e6741337a522))
+* fix staff person image url ([ba58eca](https://github.com/media-data-hub/jellyfin-plugin/commit/ba58ecabd1bb48eeb6a8aa4bf40f26851a82bc01))
+
 ## [1.3.1](https://github.com/media-data-hub/jellyfin-plugin/compare/v1.3.0...v1.3.1) (2023-10-29)
 
 
