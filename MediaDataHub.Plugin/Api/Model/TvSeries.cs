@@ -117,6 +117,7 @@ public class TvSeriesDetail : TvSeries, IMetadataResult<Entities.Series, SeriesI
   [JsonIgnore]
   public IEnumerable<StaffDetail> Staff { get; set; } = Array.Empty<StaffDetail>();
   public string ForcedSortName => SortName;
+  public DateTime? EndDate => LastAirDate;
   public string[] Tags => Expand.Tags.Select(tag => tag.Name).ToArray();
   public string[] Genres => Expand.Genres.Select(tag => tag.Name).ToArray();
   public string[] Studios => Expand.Studios.Select(tag => tag.Name).ToArray();
