@@ -93,6 +93,20 @@
                 Will create missing collection when collection is not found.
               </div>
             </div>
+            <div class="checkboxContainer checkboxContainer-withDescription">
+              <label class="emby-checkbox-label">
+                <input
+                  id="AutoRefreshCollection"
+                  name="AutoRefreshCollection"
+                  is="emby-checkbox"
+                  type="checkbox"
+                />
+                <span>Refresh collection.</span>
+              </label>
+              <div class="fieldDescription checkboxFieldDescription">
+                Refresh collection metadata after connect or create.
+              </div>
+            </div>
           </div>
           <div>
             <button
@@ -124,6 +138,8 @@
             config.AutoConnectCollection || false;
           page.querySelector("#AutoCreateCollection").checked =
             config.AutoCreateCollection || false;
+          page.querySelector("#AutoRefreshCollection").checked =
+            config.AutoRefreshCollection || false;
           Dashboard.hideLoadingMsg();
         });
         const form = page.querySelector("#MediaDataHubConfigForm");
@@ -140,6 +156,8 @@
             page.querySelector("#AutoConnectCollection").checked || false;
           config.AutoCreateCollection =
             page.querySelector("#AutoCreateCollection").checked || false;
+          config.AutoRefreshCollection =
+            page.querySelector("#AutoRefreshCollection").checked || false;
           const result = await ApiClient.updatePluginConfiguration(
             pluginId,
             config

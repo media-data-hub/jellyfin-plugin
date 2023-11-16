@@ -10,4 +10,5 @@ public class PluginConfiguration : BasePluginConfiguration
   public bool AutoAddToCollection { get; set; } = true;
   public bool AutoConnectCollection { get; set; } = false;
   public bool AutoCreateCollection { get; set; } = true;
+  public bool AutoRefreshCollection { get; set; } = false;
 }

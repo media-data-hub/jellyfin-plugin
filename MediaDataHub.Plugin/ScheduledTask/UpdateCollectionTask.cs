@@ -6,7 +6,9 @@ using MediaBrowser.Controller.Entities.Audio;
 using MediaBrowser.Controller.Entities.Movies;
 using MediaBrowser.Controller.Entities.TV;
 using MediaBrowser.Controller.Library;
+using MediaBrowser.Controller.Providers;
 using MediaBrowser.Model.Entities;
+using MediaBrowser.Model.IO;
 using MediaBrowser.Model.Tasks;
 using MediaDataHub.Plugin.Api;
 using MediaDataHub.Plugin.Api.Manager;
@@ -19,8 +21,10 @@ public class UpdateCollectionTask : IScheduledTask
 {
   private readonly ILogger<UpdateCollectionTask> _logger;
   private readonly ILibraryManager _libraryManager;
+  private readonly IProviderManager _providerManager;
   private readonly ICollectionManager _collectionManager;
   private readonly MediaDataHubApiManager _apiManager;
+  private readonly IFileSystem _fileSystem;
   public string Name => "Update Collections";
   public string Key => "MediaDataHub.UpdateCollectionTask";
   public string Description => "Add Tv series and movies and albums to collections";
@@ -28,14 +32,18 @@ public class UpdateCollectionTask : IScheduledTask
 
   public UpdateCollectionTask(
     ILibraryManager libraryManager,
+    IProviderManager providerManager,
     ICollectionManager collectionManager,
     MediaDataHubApiManager apiManager,
-    ILogger<UpdateCollectionTask> logger)
+    ILogger<UpdateCollectionTask> logger,
+    IFileSystem fileSystem)
   {
     _libraryManager = libraryManager;
+    _providerManager = providerManager;
     _collectionManager = collectionManager;
     _logger = logger;
     _apiManager = apiManager;
+    _fileSystem = fileSystem;
   }
   public async Task ExecuteAsync(IProgress<double> progress, CancellationToken cancellationToken)
   {
@@ -94,6 +102,21 @@ public class UpdateCollectionTask : IScheduledTask
           if (!boxSet.ContainsLinkedChildByItemId(item.Id))
           {
             await _collectionManager.AddToCollectionAsync(boxSet.Id, new List<Guid> { item.Id }).ConfigureAwait(false);
+          }
+          if (config.AutoRefreshCollection)
+          {
+            _logger.LogInformation("Refresh boxSet ({id}, {name})", collection.Id, collection.Name);
+            var refreshOptions = new MetadataRefreshOptions(new DirectoryService(_fileSystem))
+            {
+              MetadataRefreshMode = MetadataRefreshMode.FullRefresh,
+              ImageRefreshMode = MetadataRefreshMode.FullRefresh,
+              ReplaceAllImages = false,
+              ReplaceAllMetadata = true,
+              ForceSave = true,
+              IsAutomated = false
+            };
+            _providerManager.QueueRefresh(boxSet.Id, refreshOptions, RefreshPriority.Normal);
+
           }
         }
         else
