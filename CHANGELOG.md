@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.5.0](https://github.com/media-data-hub/jellyfin-plugin/compare/v1.4.1...v1.5.0) (2023-11-16)
+
+
+### Features
+
+* refresh collection metadata on task ([a471b47](https://github.com/media-data-hub/jellyfin-plugin/commit/a471b4718308e1af45e35e01bc921907e31cef7b))
+
+
+### Bug Fixes
+
+* Add EndDate ([4d34dce](https://github.com/media-data-hub/jellyfin-plugin/commit/4d34dce4de199e0e446ba4becb392dceb69c6cbd))
+
 ## [1.4.1](https://github.com/media-data-hub/jellyfin-plugin/compare/v1.4.0...v1.4.1) (2023-10-30)
 
 
