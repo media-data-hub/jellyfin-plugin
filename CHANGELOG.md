@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/media-data-hub/jellyfin-plugin/compare/v1.5.0...v1.6.0) (2024-01-09)
+
+
+### Features
+
+* add merge and split versions ([9fe74d6](https://github.com/media-data-hub/jellyfin-plugin/commit/9fe74d6874c46a94aafb2c77d3bff770b6fc95a8))
+
 ## [1.5.0](https://github.com/media-data-hub/jellyfin-plugin/compare/v1.4.1...v1.5.0) (2023-11-16)
 
 
