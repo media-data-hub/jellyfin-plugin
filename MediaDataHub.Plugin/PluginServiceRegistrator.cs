@@ -2,6 +2,7 @@ using MediaBrowser.Common.Plugins;
 using Microsoft.Extensions.DependencyInjection;
 using MediaDataHub.Plugin.Api;
 using MediaDataHub.Plugin.Api.Manager;
+using MediaDataHub.Plugin.Version;
 
 namespace MediaDataHub.Plugin
 {
@@ -13,6 +14,7 @@ namespace MediaDataHub.Plugin
     {
       serviceCollection.AddSingleton<MediaDataHubApiClient>();
       serviceCollection.AddSingleton<MediaDataHubApiManager>();
+      serviceCollection.AddSingleton<VersionManager>();
     }
   }
 }

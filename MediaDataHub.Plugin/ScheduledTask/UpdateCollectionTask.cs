@@ -51,7 +51,7 @@ public class UpdateCollectionTask : IScheduledTask
     var config = MediaDataHubUtils.GetConfiguration();
     if (!config.AutoAddToCollection)
     {
-      _logger.LogInformation("End update movie collections (Disabled)");
+      _logger.LogInformation("End Scheduled Task ({name}) [Disabled]", Name);
       return;
     }
     var query = new InternalItemsQuery
@@ -126,7 +126,7 @@ public class UpdateCollectionTask : IScheduledTask
       }
     }
     progress?.Report(100);
-    _logger.LogInformation("End update movie collections");
+    _logger.LogInformation("End Scheduled Task ({name})", Name);
   }
 
   private async Task<BoxSet?> GetOrCreateBoxSet(ICollectionCreation collection, PluginConfiguration config)

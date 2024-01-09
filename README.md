@@ -6,6 +6,7 @@
   - [x] Metadata
   - [x] Image
   - [ ] External Id
+  - [x] Merge / Split Versions
 - [x] TV Series
   - [x] Metadata
   - [x] Image
@@ -18,6 +19,7 @@
   - [x] Metadata
   - [x] Image
   - [ ] External Id
+  - [x] Merge / Split Versions
 - [x] Collection
   - [x] Metadata
   - [x] Image
