@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/media-data-hub/jellyfin-plugin/compare/v1.6.0...v2.0.0) (2024-01-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* use Thumbnails of Person for artist instead of Avatars
+
+### Features
+
+* use Thumbnails of Person for artist instead of Avatars ([067eefd](https://github.com/media-data-hub/jellyfin-plugin/commit/067eefdc36ed8d35934d6e844cb2bbbaa12fbf42))
+
 ## [1.6.0](https://github.com/media-data-hub/jellyfin-plugin/compare/v1.5.0...v1.6.0) (2024-01-09)
 
 
