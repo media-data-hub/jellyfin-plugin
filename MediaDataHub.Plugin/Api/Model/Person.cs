@@ -35,6 +35,9 @@ public class Person : Record, IRemoteSearchResult, IRemoteImageInfo
   [JsonPropertyName("backdrop")]
   public IEnumerable<string> Backdrop { get; set; } = Array.Empty<string>();
 
+  [JsonPropertyName("thumbnails")]
+  public IEnumerable<string> Thumbnails { get; set; } = Array.Empty<string>();
+
   [JsonPropertyName("country")]
   public string CountryId { get; set; } = "";
 

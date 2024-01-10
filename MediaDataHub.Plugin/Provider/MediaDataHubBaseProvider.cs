@@ -38,7 +38,7 @@ public abstract class MediaDataHubBaseProvider<TRecordType, TItemType, TLookupIn
 
   public abstract IEnumerable<ImageType> GetSupportedImages(BaseItem item);
 
-  public async Task<IEnumerable<RemoteImageInfo>> GetImages(BaseItem item, CancellationToken cancellationToken)
+  public virtual async Task<IEnumerable<RemoteImageInfo>> GetImages(BaseItem item, CancellationToken cancellationToken)
   {
     var list = new List<RemoteImageInfo>();
     if (item is not TItemType)
