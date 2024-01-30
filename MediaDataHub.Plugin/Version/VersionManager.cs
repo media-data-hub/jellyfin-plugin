@@ -29,7 +29,7 @@ public class VersionManager
     _logger.LogInformation("Scanning for repeated episodes");
 
     //Group by the Series name, Season name , episode name, episode number and year, then select those with more than 1 in the group
-    var duplications = episodes.GroupBy(x => new { V = x.ProviderIds[Plugin.ProviderId] }).Where(x => x.Count() > 1).ToList();
+    var duplications = episodes.GroupBy(x => x.GetProviderId(Plugin.ProviderId)).Where(x => x.Count() > 1 && x.Key != null).ToList();
 
     var total = duplications.Count;
     var current = 0;
@@ -68,7 +68,7 @@ public class VersionManager
     var movies = GetMoviesFromLibrary().ToArray();
     _logger.LogInformation("Scanning for repeated movies");
     //Group by Id, then select those with more than 1 in the group
-    var duplications = movies.GroupBy(x => new { V = x.ProviderIds[Plugin.ProviderId] }).Where(x => x.Count() > 1).ToList();
+    var duplications = movies.GroupBy(x => x.GetProviderId(Plugin.ProviderId)).Where(x => x.Count() > 1 && x.Key != null).ToList();
     var total = duplications.Count;
     var current = 0;
     //foreach grouping, merge
