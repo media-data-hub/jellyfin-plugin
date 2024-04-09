@@ -71,40 +71,4 @@ public class TvEpisodeProvider : MediaDataHubBaseProvider<Model.TvEpisode, Episo
   }
 
   public override IEnumerable<ImageType> GetSupportedImages(BaseItem item) => new[] { ImageType.Primary, ImageType.Backdrop, ImageType.Banner, ImageType.Logo, ImageType.Thumb };
-
-  public override async Task<IEnumerable<RemoteImageInfo>> GetImages(BaseItem item, CancellationToken cancellationToken)
-  {
-
-    if (item is not Episode)
-    {
-      return Enumerable.Empty<RemoteImageInfo>();
-    }
-    var list = new List<RemoteImageInfo>();
-    if (!item.TryGetProviderId(Plugin.ProviderId, out var id))
-    {
-      return list;
-    }
-    try
-    {
-      IRemoteImageInfo record = await GetById(id, cancellationToken).ConfigureAwait(false);
-      list.AddRange(record.ToRemoteImageInfo());
-      var primaryList = list.Where(item => item.Type == ImageType.Primary).ToList();
-      var thumbCount = list.Where(item => item.Type == ImageType.Thumb).Count();
-      // Fallback thumb if not exists
-      if (thumbCount <= 0 && primaryList.Count > 0)
-      {
-        list.AddRange(primaryList.Select(item => new RemoteImageInfo
-        {
-          ProviderName = Plugin.ProviderName,
-          Type = ImageType.Thumb,
-          Url = item.Url
-        }));
-      }
-    }
-    catch (Model.ApiException e)
-    {
-      _logger.LogWarning(e, "Failed to load image for boxSet ({id})", id);
-    }
-    return list;
-  }
 }
