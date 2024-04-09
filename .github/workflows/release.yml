@@ -17,9 +17,9 @@ jobs:
         id: release
         with:
           release-type: simple
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         if: ${{ steps.release.outputs.release_created }}
-      - uses: actions/setup-dotnet@v3
+      - uses: actions/setup-dotnet@v4
         if: ${{ steps.release.outputs.release_created }}
         with:
           dotnet-version: 6.0.x
