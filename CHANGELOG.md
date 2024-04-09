@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.0.1...v2.1.0) (2024-04-09)
+
+
+### Features
+
+* add fallback thumb if thumb does not exists ([e80d6cb](https://github.com/media-data-hub/jellyfin-plugin/commit/e80d6cb3ab3f2bdd29535dfa0ad8d11382f0f18c))
+
 ## [2.0.1](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.0.0...v2.0.1) (2024-01-30)
 
 
