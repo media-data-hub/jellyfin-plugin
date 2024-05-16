@@ -20,7 +20,7 @@ jobs:
       - uses: actions/setup-dotnet@v4
         if: ${{ steps.release.outputs.release_created }}
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: 8.0.x
       - run: |
           PUBLISH_VERSION=${{ steps.release.outputs.tag_name }}
           echo "PUBLISH_VERSION=${PUBLISH_VERSION#v}.0" >> $GITHUB_ENV
@@ -31,7 +31,7 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
       - run: |
           jq -c ".version = \"${PUBLISH_VERSION}\" | .timestamp = \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\"" meta.template.json > meta.json
-          mv ./MediaDataHub.Plugin/bin/Release/net6.0/publish/MediaDataHub.Plugin.dll MediaDataHub.Plugin.dll
+          mv ./MediaDataHub.Plugin/bin/Release/net8.0/publish/MediaDataHub.Plugin.dll MediaDataHub.Plugin.dll
           zip -r media-data-hub.zip meta.json MediaDataHub.Plugin.dll
           md5sum media-data-hub.zip | head -c 32 > checksum
         if: ${{ steps.release.outputs.release_created }}
