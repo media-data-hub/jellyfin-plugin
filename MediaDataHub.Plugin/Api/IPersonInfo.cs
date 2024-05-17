@@ -1,3 +1,4 @@
+using Jellyfin.Data.Enums;
 using MediaBrowser.Controller.Entities;
 
 namespace MediaDataHub.Plugin.Api;
@@ -21,11 +22,16 @@ public interface IPersonInfo : IRecord
 
   public PersonInfo ToPersonInfo()
   {
+    var success = Enum.TryParse(Type, out PersonKind kind);
+    if (!success)
+    {
+      kind = PersonKind.Unknown;
+    }
     return new PersonInfo
     {
       Name = Name,
       Role = Role,
-      Type = Type,
+      Type = kind,
       SortOrder = SortOrder,
       ImageUrl = ImageUrl,
       ProviderIds = ProviderIds
