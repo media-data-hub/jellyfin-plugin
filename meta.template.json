@@ -6,7 +6,7 @@
   "name": "Media Data Hub",
   "overview": "Read metadata from Media Data Hub",
   "owner": "Joshua Avalon",
-  "targetAbi": "10.8.11.0",
+  "targetAbi": "10.9.1.0",
   "timestamp": "2023-10-26T14:17:24+08:00Z",
   "version": "1.0.0"
 }
