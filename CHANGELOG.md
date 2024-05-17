@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.0](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.2.1...v2.3.0) (2024-05-17)
+
+
+### Features
+
+* add series status support ([b749fb7](https://github.com/media-data-hub/jellyfin-plugin/commit/b749fb7716c0453802eb01ebb0b3f5561c7ad2be))
+
 ## [2.2.1](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.2.0...v2.2.1) (2024-05-17)
 
 
