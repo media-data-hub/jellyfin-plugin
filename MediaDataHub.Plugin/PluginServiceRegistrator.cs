@@ -1,4 +1,5 @@
-using MediaBrowser.Common.Plugins;
+using MediaBrowser.Controller;
+using MediaBrowser.Controller.Plugins;
 using Microsoft.Extensions.DependencyInjection;
 using MediaDataHub.Plugin.Api;
 using MediaDataHub.Plugin.Api.Manager;
@@ -10,7 +11,7 @@ namespace MediaDataHub.Plugin
   public class PluginServiceRegistrator : IPluginServiceRegistrator
   {
     /// <inheritdoc />
-    public void RegisterServices(IServiceCollection serviceCollection)
+    public void RegisterServices(IServiceCollection serviceCollection, IServerApplicationHost applicationHost)
     {
       serviceCollection.AddSingleton<MediaDataHubApiClient>();
       serviceCollection.AddSingleton<MediaDataHubApiManager>();
