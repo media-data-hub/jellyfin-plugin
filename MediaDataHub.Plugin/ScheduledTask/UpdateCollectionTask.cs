@@ -56,7 +56,7 @@ public class UpdateCollectionTask : IScheduledTask
     }
     var query = new InternalItemsQuery
     {
-      IncludeItemTypes = new[] { BaseItemKind.Movie, BaseItemKind.Series, BaseItemKind.MusicAlbum },
+      IncludeItemTypes = [BaseItemKind.Movie, BaseItemKind.Series, BaseItemKind.MusicAlbum],
       IsVirtualItem = false,
       Recursive = true
     };
@@ -133,7 +133,7 @@ public class UpdateCollectionTask : IScheduledTask
   {
     var query = new InternalItemsQuery
     {
-      IncludeItemTypes = new[] { BaseItemKind.BoxSet },
+      IncludeItemTypes = [BaseItemKind.BoxSet],
       CollapseBoxSetItems = false,
       Recursive = true,
       HasAnyProviderId = new Dictionary<string, string> { { Plugin.ProviderId, collection.Id } }
@@ -147,7 +147,7 @@ public class UpdateCollectionTask : IScheduledTask
     {
       query = new InternalItemsQuery
       {
-        IncludeItemTypes = new[] { BaseItemKind.BoxSet },
+        IncludeItemTypes = [BaseItemKind.BoxSet],
         CollapseBoxSetItems = false,
         Recursive = true,
         Name = collection.Name
@@ -164,6 +164,6 @@ public class UpdateCollectionTask : IScheduledTask
   public IEnumerable<TaskTriggerInfo> GetDefaultTriggers()
   {
     // Run this task every 24 hours
-    return new[] { new TaskTriggerInfo { Type = TaskTriggerInfo.TriggerInterval, IntervalTicks = TimeSpan.FromHours(24).Ticks } };
+    return [new TaskTriggerInfo { Type = TaskTriggerInfo.TriggerInterval, IntervalTicks = TimeSpan.FromHours(24).Ticks }];
   }
 }

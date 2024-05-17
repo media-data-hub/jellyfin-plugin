@@ -111,12 +111,12 @@ public class VersionManager
     foreach (var link in video.GetLinkedAlternateVersions())
     {
       link.SetPrimaryVersionId(null);
-      link.LinkedAlternateVersions = Array.Empty<LinkedChild>();
+      link.LinkedAlternateVersions = [];
 
       await link.UpdateToRepositoryAsync(ItemUpdateType.MetadataEdit, CancellationToken.None).ConfigureAwait(false);
     }
 
-    video.LinkedAlternateVersions = Array.Empty<LinkedChild>();
+    video.LinkedAlternateVersions = [];
     video.SetPrimaryVersionId(null);
     await video.UpdateToRepositoryAsync(ItemUpdateType.MetadataEdit, CancellationToken.None).ConfigureAwait(false);
   }
@@ -160,7 +160,7 @@ public class VersionManager
 
       if (item.LinkedAlternateVersions.Length > 0)
       {
-        item.LinkedAlternateVersions = Array.Empty<LinkedChild>();
+        item.LinkedAlternateVersions = [];
         await item.UpdateToRepositoryAsync(ItemUpdateType.MetadataEdit, CancellationToken.None).ConfigureAwait(false);
       }
     }
@@ -173,7 +173,7 @@ public class VersionManager
   {
     var query = new InternalItemsQuery
     {
-      IncludeItemTypes = new[] { BaseItemKind.Episode },
+      IncludeItemTypes = [BaseItemKind.Episode],
       IsVirtualItem = false,
       Recursive = true
     };
@@ -188,7 +188,7 @@ public class VersionManager
   {
     var query = new InternalItemsQuery
     {
-      IncludeItemTypes = new[] { BaseItemKind.Movie },
+      IncludeItemTypes = [BaseItemKind.Movie],
       IsVirtualItem = false,
       Recursive = true
     };

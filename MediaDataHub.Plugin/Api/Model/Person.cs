@@ -30,19 +30,19 @@ public class Person : Record, IRemoteSearchResult, IRemoteImageInfo
   public DateTime? Dod { get; set; }
 
   [JsonPropertyName("avatars")]
-  public IEnumerable<string> Avatars { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> Avatars { get; set; } = [];
 
   [JsonPropertyName("backdrop")]
-  public IEnumerable<string> Backdrop { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> Backdrop { get; set; } = [];
 
   [JsonPropertyName("thumbnails")]
-  public IEnumerable<string> Thumbnails { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> Thumbnails { get; set; } = [];
 
   [JsonPropertyName("country")]
   public string CountryId { get; set; } = "";
 
   [JsonPropertyName("tags")]
-  public IEnumerable<string> TagIds { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> TagIds { get; set; } = [];
   public IEnumerable<string> ImageUrls => Avatars;
   public string? Overview => Description;
   public DateTime? PremiereDate => Dob;
@@ -59,7 +59,7 @@ public class PersonExpand
   public Country Country { get; set; } = new();
 
   [JsonPropertyName("tags")]
-  public IEnumerable<Tag> Tags { get; set; } = Array.Empty<Tag>();
+  public IEnumerable<Tag> Tags { get; set; } = [];
 }
 
 public class PersonDetail : Person, IMetadataResult<Entities.Person, PersonLookupInfo>, IMetadataResult<MusicArtist, ArtistInfo>
@@ -72,5 +72,5 @@ public class PersonDetail : Person, IMetadataResult<Entities.Person, PersonLooku
   public string ForcedSortName => SortName;
   public DateTime? EndDate => Dod;
   public string[] Tags => Expand.Tags.Select(tag => tag.Name).ToArray();
-  public string[] ProductionLocations => new[] { Expand.Country.Name };
+  public string[] ProductionLocations => [Expand.Country.Name];
 }

@@ -40,5 +40,5 @@ public class MusicAlbumProvider : MediaDataHubProvider<Model.MusicAlbum, MusicAl
     return _apiManager.SearchMusicAlbums(info.Name, info.Year, cancellationToken);
   }
 
-  public override IEnumerable<ImageType> GetSupportedImages(BaseItem item) => new[] { ImageType.Primary, ImageType.Backdrop, ImageType.Banner, ImageType.Logo, ImageType.Thumb };
+  public override IEnumerable<ImageType> GetSupportedImages(BaseItem item) => [ImageType.Primary, ImageType.Backdrop, ImageType.Banner, ImageType.Logo, ImageType.Thumb];
 }

@@ -47,31 +47,31 @@ public class TvSeries : Record, IRemoteSearchResult, IRemoteImageInfo
   public string CountryId { get; set; } = "";
 
   [JsonPropertyName("collections")]
-  public IEnumerable<string> CollectionIds { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> CollectionIds { get; set; } = [];
 
   [JsonPropertyName("studios")]
-  public IEnumerable<string> StudioIds { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> StudioIds { get; set; } = [];
 
   [JsonPropertyName("genres")]
-  public IEnumerable<string> GenreIds { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> GenreIds { get; set; } = [];
 
   [JsonPropertyName("tags")]
-  public IEnumerable<string> TagIds { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> TagIds { get; set; } = [];
 
   [JsonPropertyName("posters")]
-  public IEnumerable<string> Posters { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> Posters { get; set; } = [];
 
   [JsonPropertyName("backdrop")]
-  public IEnumerable<string> Backdrop { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> Backdrop { get; set; } = [];
 
   [JsonPropertyName("banners")]
-  public IEnumerable<string> Banners { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> Banners { get; set; } = [];
 
   [JsonPropertyName("logos")]
-  public IEnumerable<string> Logos { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> Logos { get; set; } = [];
 
   [JsonPropertyName("thumbnails")]
-  public IEnumerable<string> Thumbnails { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> Thumbnails { get; set; } = [];
   public IEnumerable<string> ImageUrls => Posters;
   public string? Overview => Description;
   public DateTime? PremiereDate => FirstAirDate;
@@ -94,16 +94,16 @@ public class TvSeriesExpand
   public Country Country { get; set; } = new();
 
   [JsonPropertyName("collections")]
-  public IEnumerable<Collection> Collections { get; set; } = Array.Empty<Collection>();
+  public IEnumerable<Collection> Collections { get; set; } = [];
 
   [JsonPropertyName("studios")]
-  public IEnumerable<Studio> Studios { get; set; } = Array.Empty<Studio>();
+  public IEnumerable<Studio> Studios { get; set; } = [];
 
   [JsonPropertyName("genres")]
-  public IEnumerable<Genre> Genres { get; set; } = Array.Empty<Genre>();
+  public IEnumerable<Genre> Genres { get; set; } = [];
 
   [JsonPropertyName("tags")]
-  public IEnumerable<Tag> Tags { get; set; } = Array.Empty<Tag>();
+  public IEnumerable<Tag> Tags { get; set; } = [];
 }
 
 public class TvSeriesDetail : TvSeries, IMetadataResult<Entities.Series, SeriesInfo>, IDetailStaff
@@ -115,13 +115,14 @@ public class TvSeriesDetail : TvSeries, IMetadataResult<Entities.Series, SeriesI
   public TvSeriesExpand Expand { get; set; } = new();
 
   [JsonIgnore]
-  public IEnumerable<StaffDetail> Staff { get; set; } = Array.Empty<StaffDetail>();
+  public IEnumerable<StaffDetail> Staff { get; set; } = [];
   public string ForcedSortName => SortName;
   public DateTime? EndDate => LastAirDate;
+  public SeriesStatus? Status => LastAirDate == null ? SeriesStatus.Continuing : SeriesStatus.Ended;
   public string[] Tags => Expand.Tags.Select(tag => tag.Name).ToArray();
   public string[] Genres => Expand.Genres.Select(tag => tag.Name).ToArray();
   public string[] Studios => Expand.Studios.Select(tag => tag.Name).ToArray();
-  public string[] ProductionLocations => new[] { Expand.Country.Name };
+  public string[] ProductionLocations => [Expand.Country.Name];
   public string? OfficialRating => ContentRatings;
   public float? CommunityRating => Convert.ToSingle(Rating);
   public IEnumerable<IPersonInfo> People => Staff;

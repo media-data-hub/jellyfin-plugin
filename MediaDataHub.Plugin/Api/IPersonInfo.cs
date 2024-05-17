@@ -9,7 +9,7 @@ public interface IPersonInfo : IRecord
   public string Role { get; }
   public string Type { get; }
   public int? SortOrder { get; }
-  public IEnumerable<string> ImageUrls => Enumerable.Empty<string>();
+  public IEnumerable<string> ImageUrls => [];
   public string? ImageUrl
   {
     get

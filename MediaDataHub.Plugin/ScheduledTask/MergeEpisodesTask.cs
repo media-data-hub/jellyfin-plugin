@@ -33,6 +33,6 @@ public class MergeEpisodesTask : IScheduledTask
   public IEnumerable<TaskTriggerInfo> GetDefaultTriggers()
   {
     // Run this task every 24 hours
-    return Array.Empty<TaskTriggerInfo>();
+    return [];
   }
 }

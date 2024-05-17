@@ -32,13 +32,13 @@ public class StudioImageProvider : IRemoteImageProvider
   /// <inheritdoc />
   public Task<HttpResponseMessage> GetImageResponse(string url, CancellationToken cancellationToken) => _httpClientFactory.CreateClient().GetAsync(url, cancellationToken);
 
-  public IEnumerable<ImageType> GetSupportedImages(BaseItem item) => new[] { ImageType.Primary, ImageType.Backdrop, ImageType.Banner, ImageType.Logo, ImageType.Thumb };
+  public IEnumerable<ImageType> GetSupportedImages(BaseItem item) => [ImageType.Primary, ImageType.Backdrop, ImageType.Banner, ImageType.Logo, ImageType.Thumb];
 
   public async Task<IEnumerable<RemoteImageInfo>> GetImages(BaseItem item, CancellationToken cancellationToken)
   {
     if (item is not Studio)
     {
-      return Enumerable.Empty<RemoteImageInfo>();
+      return [];
     }
     try
     {
@@ -52,14 +52,14 @@ public class StudioImageProvider : IRemoteImageProvider
       else
       {
         IEnumerable<IRemoteImageInfo> records = await _apiManager.SearchStudios(item.Name, cancellationToken);
-        return records.FirstOrDefault()?.ToRemoteImageInfo() ?? Enumerable.Empty<RemoteImageInfo>();
+        return records.FirstOrDefault()?.ToRemoteImageInfo() ?? [];
       }
     }
     catch (Model.ApiException e)
     {
       _logger.LogWarning(e, "Failed to load image for studio");
     }
-    return Enumerable.Empty<RemoteImageInfo>();
+    return [];
   }
 
   public bool Supports(BaseItem item) => item is Studio;

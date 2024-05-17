@@ -1,5 +1,7 @@
 using MediaBrowser.Controller.Entities;
+using MediaBrowser.Controller.Entities.TV;
 using MediaBrowser.Controller.Providers;
+using MediaBrowser.Model.Entities;
 
 namespace MediaDataHub.Plugin.Api;
 
@@ -15,17 +17,17 @@ public interface IMetadataResult<TItemType, TLookupInfoType> : IRecord
   public string? OfficialRating => null;
   public float? CommunityRating => null;
   public float? CriticRating => null;
-  public string[] Tags => Array.Empty<string>();
-  public string[] Genres => Array.Empty<string>();
-  public string[] Studios => Array.Empty<string>();
-  public string[] ProductionLocations => Array.Empty<string>();
+  public string[] Tags => [];
+  public string[] Genres => [];
+  public string[] Studios => [];
+  public string[] ProductionLocations => [];
   public int? ProductionYear => null;
   public int? IndexNumber => null;
   public int? ParentIndexNumber => null;
   public DateTime? PremiereDate => null;
   public DateTime? EndDate => null;
   public Dictionary<string, string> ProviderIds => new() { { Plugin.ProviderId, Id } };
-  public IEnumerable<IPersonInfo> People => Enumerable.Empty<IPersonInfo>();
+  public IEnumerable<IPersonInfo> People => [];
 
   public MetadataResult<TItemType> ToMetadataResult(TLookupInfoType info)
   {
@@ -50,6 +52,10 @@ public interface IMetadataResult<TItemType, TLookupInfoType> : IRecord
       EndDate = EndDate,
       ProviderIds = ProviderIds,
     };
+    if (item is Series series)
+    {
+      series.Status = series.EndDate == null ? SeriesStatus.Continuing : SeriesStatus.Ended;
+    }
     var result = new MetadataResult<TItemType>
     {
       HasMetadata = true,

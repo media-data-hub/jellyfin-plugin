@@ -70,5 +70,5 @@ public class TvEpisodeProvider : MediaDataHubBaseProvider<Model.TvEpisode, Episo
     return _apiManager.GetTvEpisodeById(id, cancellationToken);
   }
 
-  public override IEnumerable<ImageType> GetSupportedImages(BaseItem item) => new[] { ImageType.Primary, ImageType.Backdrop, ImageType.Banner, ImageType.Logo, ImageType.Thumb };
+  public override IEnumerable<ImageType> GetSupportedImages(BaseItem item) => [ImageType.Primary, ImageType.Backdrop, ImageType.Banner, ImageType.Logo, ImageType.Thumb];
 }

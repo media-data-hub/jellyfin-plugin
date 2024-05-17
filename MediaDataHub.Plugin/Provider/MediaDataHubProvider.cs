@@ -28,7 +28,7 @@ public abstract class MediaDataHubProvider<TRecordType, TItemType, TLookupInfoTy
       if (record is not null)
       {
         var remoteResult = record.ToRemoteSearchResult();
-        return new[] { remoteResult };
+        return [remoteResult];
       }
     }
     _logger.LogInformation("GetSearchResults ({name})", info.Name);

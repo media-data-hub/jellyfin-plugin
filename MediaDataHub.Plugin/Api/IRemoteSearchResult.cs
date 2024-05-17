@@ -6,7 +6,7 @@ public interface IRemoteSearchResult : IRecord
 {
   public string SearchProviderName => Plugin.ProviderName;
   public string Name { get; }
-  public IEnumerable<string> ImageUrls => Enumerable.Empty<string>();
+  public IEnumerable<string> ImageUrls => [];
   public string? ImageUrl
   {
     get

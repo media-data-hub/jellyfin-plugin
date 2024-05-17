@@ -34,19 +34,19 @@ public class TvEpisode : Record, IRemoteSearchResult, IRemoteImageInfo
   public string CountryId { get; set; } = "";
 
   [JsonPropertyName("posters")]
-  public IEnumerable<string> Posters { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> Posters { get; set; } = [];
 
   [JsonPropertyName("backdrop")]
-  public IEnumerable<string> Backdrop { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> Backdrop { get; set; } = [];
 
   [JsonPropertyName("banners")]
-  public IEnumerable<string> Banners { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> Banners { get; set; } = [];
 
   [JsonPropertyName("logos")]
-  public IEnumerable<string> Logos { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> Logos { get; set; } = [];
 
   [JsonPropertyName("thumbnails")]
-  public IEnumerable<string> Thumbnails { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> Thumbnails { get; set; } = [];
 
   [JsonPropertyName("order")]
   public int Order { get; set; }
@@ -84,9 +84,9 @@ public class TvEpisodeDetail : TvEpisode, IMetadataResult<Entities.Episode, Epis
   public TvEpisodeExpand Expand { get; set; } = new();
 
   [JsonIgnore]
-  public IEnumerable<StaffDetail> Staff { get; set; } = Array.Empty<StaffDetail>();
+  public IEnumerable<StaffDetail> Staff { get; set; } = [];
   public string ForcedSortName => SortName;
-  public string[] ProductionLocations => new[] { Expand.Country.Name };
+  public string[] ProductionLocations => [Expand.Country.Name];
   public float? CommunityRating => Convert.ToSingle(Rating);
   public IEnumerable<IPersonInfo> People => Staff;
   public int? IndexNumber => Order;

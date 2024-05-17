@@ -40,22 +40,22 @@ public class TvSeason : Record, IRemoteSearchResult, IRemoteImageInfo
   public string CountryId { get; set; } = "";
 
   [JsonPropertyName("studios")]
-  public IEnumerable<string> StudioIds { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> StudioIds { get; set; } = [];
 
   [JsonPropertyName("posters")]
-  public IEnumerable<string> Posters { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> Posters { get; set; } = [];
 
   [JsonPropertyName("backdrop")]
-  public IEnumerable<string> Backdrop { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> Backdrop { get; set; } = [];
 
   [JsonPropertyName("banners")]
-  public IEnumerable<string> Banners { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> Banners { get; set; } = [];
 
   [JsonPropertyName("logos")]
-  public IEnumerable<string> Logos { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> Logos { get; set; } = [];
 
   [JsonPropertyName("thumbnails")]
-  public IEnumerable<string> Thumbnails { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> Thumbnails { get; set; } = [];
 
   [JsonPropertyName("order")]
   public int Order { get; set; }
@@ -84,7 +84,7 @@ public class TvSeasonExpand
   public Country Country { get; set; } = new();
 
   [JsonPropertyName("studios")]
-  public IEnumerable<Studio> Studios { get; set; } = Array.Empty<Studio>();
+  public IEnumerable<Studio> Studios { get; set; } = [];
 }
 
 public class TvSeasonDetail : TvSeason, IMetadataResult<Entities.Season, SeasonInfo>, IDetailStaff
@@ -96,10 +96,10 @@ public class TvSeasonDetail : TvSeason, IMetadataResult<Entities.Season, SeasonI
   public TvSeasonExpand Expand { get; set; } = new();
 
   [JsonIgnore]
-  public IEnumerable<StaffDetail> Staff { get; set; } = Array.Empty<StaffDetail>();
+  public IEnumerable<StaffDetail> Staff { get; set; } = [];
   public string ForcedSortName => SortName;
   public string[] Studios => Expand.Studios.Select(tag => tag.Name).ToArray();
-  public string[] ProductionLocations => new[] { Expand.Country.Name };
+  public string[] ProductionLocations => [Expand.Country.Name];
   public string? OfficialRating => ContentRatings;
   public float? CommunityRating => Convert.ToSingle(Rating);
   public IEnumerable<IPersonInfo> People => Staff;

@@ -18,5 +18,5 @@ public class Response<T>
   public int TotalItems { get; set; }
 
   [JsonPropertyName("items")]
-  public IEnumerable<T> Items { get; set; } = Array.Empty<T>();
+  public IEnumerable<T> Items { get; set; } = [];
 }

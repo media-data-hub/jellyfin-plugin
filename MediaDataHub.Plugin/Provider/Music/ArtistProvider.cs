@@ -41,7 +41,7 @@ public class ArtistProvider : MediaDataHubProvider<Model.Person, MusicArtist, Ar
     return _apiManager.SearchPeople(info.Name, info.Year, cancellationToken);
   }
 
-  public override IEnumerable<ImageType> GetSupportedImages(BaseItem item) => new[] { ImageType.Primary, ImageType.Backdrop };
+  public override IEnumerable<ImageType> GetSupportedImages(BaseItem item) => [ImageType.Primary, ImageType.Backdrop];
 
   public override async Task<IEnumerable<RemoteImageInfo>> GetImages(BaseItem item, CancellationToken cancellationToken)
   {

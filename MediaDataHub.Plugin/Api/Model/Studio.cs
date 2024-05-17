@@ -26,19 +26,19 @@ public class Studio : Record, IRemoteImageInfo
   public DateTime? FoundedAt { get; set; }
 
   [JsonPropertyName("posters")]
-  public IEnumerable<string> Posters { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> Posters { get; set; } = [];
 
   [JsonPropertyName("backdrop")]
-  public IEnumerable<string> Backdrop { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> Backdrop { get; set; } = [];
 
   [JsonPropertyName("banners")]
-  public IEnumerable<string> Banners { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> Banners { get; set; } = [];
 
   [JsonPropertyName("logos")]
-  public IEnumerable<string> Logos { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> Logos { get; set; } = [];
 
   [JsonPropertyName("thumbnails")]
-  public IEnumerable<string> Thumbnails { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> Thumbnails { get; set; } = [];
   public IEnumerable<string> ImageUrls => Posters;
   public Dictionary<ImageType, IEnumerable<string>> RemoteImages => new() {
     { ImageType.Primary, Posters },

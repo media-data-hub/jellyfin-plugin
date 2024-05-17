@@ -18,25 +18,25 @@ public class Collection : Record, IRemoteSearchResult, IRemoteImageInfo, ICollec
   public string Description { get; set; } = "";
 
   [JsonPropertyName("genres")]
-  public IEnumerable<string> GenreIds { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> GenreIds { get; set; } = [];
 
   [JsonPropertyName("tags")]
-  public IEnumerable<string> TagIds { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> TagIds { get; set; } = [];
 
   [JsonPropertyName("posters")]
-  public IEnumerable<string> Posters { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> Posters { get; set; } = [];
 
   [JsonPropertyName("backdrop")]
-  public IEnumerable<string> Backdrop { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> Backdrop { get; set; } = [];
 
   [JsonPropertyName("banners")]
-  public IEnumerable<string> Banners { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> Banners { get; set; } = [];
 
   [JsonPropertyName("logos")]
-  public IEnumerable<string> Logos { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> Logos { get; set; } = [];
 
   [JsonPropertyName("thumbnails")]
-  public IEnumerable<string> Thumbnails { get; set; } = Array.Empty<string>();
+  public IEnumerable<string> Thumbnails { get; set; } = [];
 
   [JsonPropertyName("releaseDate")]
   [JsonConverter(typeof(DateTimeFormatConverter))]
@@ -63,10 +63,10 @@ public class Collection : Record, IRemoteSearchResult, IRemoteImageInfo, ICollec
 public class CollectionExpand
 {
   [JsonPropertyName("genres")]
-  public IEnumerable<Genre> Genres { get; set; } = Array.Empty<Genre>();
+  public IEnumerable<Genre> Genres { get; set; } = [];
 
   [JsonPropertyName("tags")]
-  public IEnumerable<Tag> Tags { get; set; } = Array.Empty<Tag>();
+  public IEnumerable<Tag> Tags { get; set; } = [];
 }
 
 public class CollectionDetail : Collection, IMetadataResult<Entities.BoxSet, BoxSetInfo>
