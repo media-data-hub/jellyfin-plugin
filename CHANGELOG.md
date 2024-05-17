@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.2.0](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.1.0...v2.2.0) (2024-05-17)
+
+
+### Features
+
+* support Jellyfin 10.9.1 ([#23](https://github.com/media-data-hub/jellyfin-plugin/issues/23)) ([8c2a3c6](https://github.com/media-data-hub/jellyfin-plugin/commit/8c2a3c64fcd38065657ed3bd4c51a5b02c8d9a0f))
+
+
+### Bug Fixes
+
+* remove thumb fallback ([7750aa6](https://github.com/media-data-hub/jellyfin-plugin/commit/7750aa68dce1439bf6431de8042d47d9e5b5f354))
+
 ## [2.1.0](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.0.1...v2.1.0) (2024-04-09)
 
 
