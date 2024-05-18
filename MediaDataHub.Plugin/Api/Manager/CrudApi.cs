@@ -36,7 +36,24 @@ public partial class MediaDataHubApiManager
       { "perPage", "100" }
     };
     var staff = await _client.List<StaffDetail>(staffMetaCollectionName, cancellationToken, staffQuery, token).ConfigureAwait(false);
-    detail.Staff = staff.Items;
+    detail.Staff = staff.Items.Select(v =>
+    {
+      switch (v.Type)
+      {
+        case "Actor":
+          break;
+        case "Director":
+          v.Priority += 1000;
+          break;
+        case "Writer":
+          v.Priority += 2000;
+          break;
+        default:
+          v.Priority += 3000;
+          break;
+      }
+      return v;
+    });
     return detail;
   }
 
