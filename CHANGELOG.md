@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.1](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.3.0...v2.3.1) (2024-05-18)
+
+
+### Bug Fixes
+
+* change targetAbi  to 10.9.2.0 ([828ae9a](https://github.com/media-data-hub/jellyfin-plugin/commit/828ae9a558b1d26db66027f6227c0aaa94173d08))
+
 ## [2.3.0](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.2.1...v2.3.0) (2024-05-17)
 
 
