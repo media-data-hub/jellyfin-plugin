@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.2](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.3.1...v2.3.2) (2024-05-18)
+
+
+### Bug Fixes
+
+* update priority for non actor ([3479739](https://github.com/media-data-hub/jellyfin-plugin/commit/3479739ee6e392ec2a7ce143201b499ef94f1046))
+
 ## [2.3.1](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.3.0...v2.3.1) (2024-05-18)
 
 
