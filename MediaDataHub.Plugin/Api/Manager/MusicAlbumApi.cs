@@ -16,6 +16,7 @@ public partial class MediaDataHubApiManager : IMusicAlbumApi
 
   public Task<IEnumerable<MusicAlbum>> SearchMusicAlbums(string name, int? year, CancellationToken cancellationToken)
   {
+    name = name.Replace("'", "\\'");
     var filters = new List<string> {
       JoinReleaseDateFilter($"matchName='{name}'", year),
       JoinReleaseDateFilter($"name='{name}' || sortName='{name}'", year),

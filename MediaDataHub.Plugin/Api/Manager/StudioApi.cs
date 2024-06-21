@@ -11,6 +11,7 @@ public partial class MediaDataHubApiManager : IStudioApi
 
   public Task<IEnumerable<Studio>> SearchStudios(string name, CancellationToken cancellationToken)
   {
+    name = name.Replace("'", "\\'");
     var filters = new List<string> { $"name='{name}' || sortName='{name}'" };
     return Search<Studio>(Collections.Studio, filters, "sortName", 100, cancellationToken);
   }
