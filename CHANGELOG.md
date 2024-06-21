@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.3](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.3.2...v2.3.3) (2024-06-21)
+
+
+### Bug Fixes
+
+* escape ' in name ([36181dd](https://github.com/media-data-hub/jellyfin-plugin/commit/36181dddb8f146d86298f7dc7868049e0f6197c0))
+
 ## [2.3.2](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.3.1...v2.3.2) (2024-05-18)
 
 
