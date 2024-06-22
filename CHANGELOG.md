@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.4](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.3.3...v2.3.4) (2024-06-22)
+
+
+### Bug Fixes
+
+* improve collection task performance ([25a3e47](https://github.com/media-data-hub/jellyfin-plugin/commit/25a3e473354003fa9a5570f85668d6ed6098acf8))
+
 ## [2.3.3](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.3.2...v2.3.3) (2024-06-21)
 
 
