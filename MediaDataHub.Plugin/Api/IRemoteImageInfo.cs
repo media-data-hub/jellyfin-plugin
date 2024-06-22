@@ -5,7 +5,7 @@ namespace MediaDataHub.Plugin.Api;
 
 public interface IRemoteImageInfo : IRecord
 {
-  public Dictionary<ImageType, IEnumerable<string>> RemoteImages => new() { };
+  public Dictionary<ImageType, IEnumerable<string>> RemoteImages => [];
 
   public IEnumerable<RemoteImageInfo> ToRemoteImageInfo()
   {

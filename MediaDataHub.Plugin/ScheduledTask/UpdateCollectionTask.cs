@@ -14,6 +14,7 @@ using MediaDataHub.Plugin.Api;
 using MediaDataHub.Plugin.Api.Manager;
 using Model = MediaDataHub.Plugin.Api.Model;
 using MediaDataHub.Plugin.Configuration;
+using System.Collections.ObjectModel;
 
 namespace MediaDataHub.Plugin.ScheduledTask;
 
@@ -61,16 +62,17 @@ public class UpdateCollectionTask : IScheduledTask
       Recursive = true
     };
     var items = _libraryManager.GetItemList(query).Select((item, index) => (item, index));
+    Dictionary<string, Model.Collection> collectionDict = [];
+    Dictionary<string, List<BaseItem>> mappingDict = [];
     foreach (var (item, index) in items)
     {
-      progress?.Report(100.0 * index / items.Count());
       if (!item.TryGetProviderId(Plugin.ProviderId, out var id))
       {
         continue;
       }
-      IEnumerable<Model.Collection> collections;
       try
       {
+        IEnumerable<Model.Collection> collections;
         switch (item)
         {
           case Movie movie:
@@ -88,41 +90,56 @@ public class UpdateCollectionTask : IScheduledTask
           default:
             continue;
         }
+        foreach (var collection in collections)
+        {
+          collectionDict[collection.Id] = collection;
+          var itemList = mappingDict.GetValueOrDefault(collection.Id, []);
+          itemList.Add(item);
+          mappingDict[collection.Id] = itemList;
+        }
       }
       catch (Model.ApiException e)
       {
         _logger.LogWarning(e, "Failed to load ({id})", id);
         continue;
       }
-      foreach (var collection in collections)
+    }
+    foreach (var collectionEntry in collectionDict.Select((value, index) => new { index, value = value.Value }))
+    {
+      var index = collectionEntry.index;
+      progress?.Report(100.0 * index / collectionDict.Count);
+      var collection = collectionEntry.value;
+      var boxSet = await GetOrCreateBoxSet(collection, config);
+      if (boxSet != null)
       {
-        var boxSet = await GetOrCreateBoxSet(collection, config);
-        if (boxSet != null)
+        var itemsToAdd = mappingDict[collection.Id]
+                .Where(item => !boxSet.ContainsLinkedChildByItemId(item.Id))
+                .Select(item => item.Id)
+                .ToList();
+        if (itemsToAdd.Count != 0)
         {
-          if (!boxSet.ContainsLinkedChildByItemId(item.Id))
+          _logger.LogInformation("Add to boxSet ({id}, {name})", collection.Id, itemsToAdd);
+          await _collectionManager.AddToCollectionAsync(boxSet.Id, itemsToAdd).ConfigureAwait(false);
+        }
+        if (config.AutoRefreshCollection)
+        {
+          _logger.LogInformation("Refresh boxSet ({id}, {name})", collection.Id, collection.Name);
+          var refreshOptions = new MetadataRefreshOptions(new DirectoryService(_fileSystem))
           {
-            await _collectionManager.AddToCollectionAsync(boxSet.Id, new List<Guid> { item.Id }).ConfigureAwait(false);
-          }
-          if (config.AutoRefreshCollection)
-          {
-            _logger.LogInformation("Refresh boxSet ({id}, {name})", collection.Id, collection.Name);
-            var refreshOptions = new MetadataRefreshOptions(new DirectoryService(_fileSystem))
-            {
-              MetadataRefreshMode = MetadataRefreshMode.FullRefresh,
-              ImageRefreshMode = MetadataRefreshMode.FullRefresh,
-              ReplaceAllImages = false,
-              ReplaceAllMetadata = true,
-              ForceSave = true,
-              IsAutomated = false
-            };
-            _providerManager.QueueRefresh(boxSet.Id, refreshOptions, RefreshPriority.Normal);
+            MetadataRefreshMode = MetadataRefreshMode.FullRefresh,
+            ImageRefreshMode = MetadataRefreshMode.FullRefresh,
+            ReplaceAllImages = false,
+            ReplaceAllMetadata = true,
+            ForceSave = true,
+            IsAutomated = false
+          };
+          _providerManager.QueueRefresh(boxSet.Id, refreshOptions, RefreshPriority.Normal);
 
-          }
         }
-        else
-        {
-          _logger.LogWarning("Failed to get or create boxSet ({id}, {name})", collection.Id, collection.Name);
-        }
+      }
+      else
+      {
+        _logger.LogWarning("Failed to get or create boxSet ({id}, {name})", collection.Id, collection.Name);
       }
     }
     progress?.Report(100);
@@ -141,6 +158,7 @@ public class UpdateCollectionTask : IScheduledTask
     var boxSet = _libraryManager.GetItemList(query).FirstOrDefault() as BoxSet;
     if (boxSet != null)
     {
+      _logger.LogInformation("Find boxSet ({id}, {name})", collection.Id, collection.Name);
       return boxSet;
     }
     if (config.AutoConnectCollection)
@@ -156,8 +174,10 @@ public class UpdateCollectionTask : IScheduledTask
     }
     if (boxSet != null)
     {
+      _logger.LogInformation("Find boxSet ({id}, {name})", collection.Id, collection.Name);
       return boxSet;
     }
+    _logger.LogInformation("Cannot find boxSet ({id}, {name})", collection.Id, collection.Name);
     return config.AutoCreateCollection ? await _collectionManager.CreateCollectionAsync(collection.ToCollectionCreationOptions()).ConfigureAwait(false) : null;
   }
 

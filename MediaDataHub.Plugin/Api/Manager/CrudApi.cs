@@ -61,7 +61,7 @@ public partial class MediaDataHubApiManager
   where T : IRecord
   {
     var token = await _client.AuthWithPassword(cancellationToken).ConfigureAwait(false);
-    List<T> records = new();
+    List<T> records = [];
     foreach (var filter in filters)
     {
       var idFilter = string.Join(" && ", records.Select(record => $"id!='{record.Id}'"));
