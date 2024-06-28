@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.6](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.3.5...v2.3.6) (2024-06-28)
+
+
+### Bug Fixes
+
+* handle TvEpisode tvSeason ([2f239f7](https://github.com/media-data-hub/jellyfin-plugin/commit/2f239f7b447c087d0c9317249e439d2ad9203a54))
+
 ## [2.3.5](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.3.4...v2.3.5) (2024-06-28)
 
 
