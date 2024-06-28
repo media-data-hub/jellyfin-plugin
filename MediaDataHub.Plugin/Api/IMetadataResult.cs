@@ -47,7 +47,7 @@ public interface IMetadataResult<TItemType, TLookupInfoType> : IRecord
       ProductionLocations = ProductionLocations,
       ProductionYear = ProductionYear,
       IndexNumber = IndexNumber,
-      ParentIndexNumber = ParentIndexNumber,
+      ParentIndexNumber = ParentIndexNumber != null ? ParentIndexNumber : info.ParentIndexNumber,
       PremiereDate = PremiereDate,
       EndDate = EndDate,
       ProviderIds = ProviderIds,

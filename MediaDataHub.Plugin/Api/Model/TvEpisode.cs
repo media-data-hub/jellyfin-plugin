@@ -73,12 +73,15 @@ public class TvEpisodeExpand
 
   [JsonPropertyName("country")]
   public Country Country { get; set; } = new();
+
+  [JsonPropertyName("season")]
+  public TvSeason Season { get; set; } = new();
 }
 
 public class TvEpisodeDetail : TvEpisode, IMetadataResult<Entities.Episode, EpisodeInfo>, IDetailStaff
 {
   [JsonIgnore]
-  public static readonly IDictionary<string, string?> Query = new Dictionary<string, string?>() { { "expand", "language,country" } };
+  public static readonly IDictionary<string, string?> Query = new Dictionary<string, string?>() { { "expand", "language,country,season" } };
 
   [JsonPropertyName("expand")]
   public TvEpisodeExpand Expand { get; set; } = new();
@@ -90,4 +93,5 @@ public class TvEpisodeDetail : TvEpisode, IMetadataResult<Entities.Episode, Epis
   public float? CommunityRating => Convert.ToSingle(Rating);
   public IEnumerable<IPersonInfo> People => Staff;
   public int? IndexNumber => Order;
+  public int? ParentIndexNumber => Expand.Season.Order;
 }
