@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.5](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.3.4...v2.3.5) (2024-06-28)
+
+
+### Bug Fixes
+
+* handle TvEpisode ParentIndexNumber ([f6c7f52](https://github.com/media-data-hub/jellyfin-plugin/commit/f6c7f521be07d523aed029a3297201fdf8156166))
+
 ## [2.3.4](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.3.3...v2.3.4) (2024-06-22)
 
 
