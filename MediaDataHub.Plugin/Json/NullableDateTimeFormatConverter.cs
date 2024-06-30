@@ -14,7 +14,7 @@ public class NullableDateTimeFormatConverter : JsonConverter<DateTime?>
     {
       return null;
     }
-    return DateTime.ParseExact(reader.GetString() ?? string.Empty, "yyyy'-'MM'-'dd' 'HH':'mm':'ss'.'FFFK", CultureInfo.InvariantCulture);
+    return DateTime.ParseExact(value, "yyyy-MM-dd HH:mm:ss.FFFK", CultureInfo.InvariantCulture);
   }
 
   public override void Write(Utf8JsonWriter writer, DateTime? value, JsonSerializerOptions options)
