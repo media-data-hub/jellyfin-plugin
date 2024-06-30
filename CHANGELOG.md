@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.7](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.3.6...v2.3.7) (2024-06-30)
+
+
+### Bug Fixes
+
+* update datatime format ([79ac3b0](https://github.com/media-data-hub/jellyfin-plugin/commit/79ac3b005cdcfb0981783ebb38ea7bfbfa165413))
+
 ## [2.3.6](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.3.5...v2.3.6) (2024-06-28)
 
 
