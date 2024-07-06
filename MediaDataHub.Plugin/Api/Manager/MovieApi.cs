@@ -26,6 +26,8 @@ public partial class MediaDataHubApiManager : IMovieApi
     {
       var trim = name[..name.LastIndexOf($"({year})")].TrimEnd();
       filters.Insert(0, JoinReleaseDateFilter($"matchName='{trim}'", year));
+      filters.Insert(1, JoinReleaseDateFilter($"name='{trim}'", year));
+      filters.Insert(2, JoinReleaseDateFilter($"sortName='{trim}'", year));
     }
     var nameTokens = name.Split();
     if (nameTokens.Length > 1)
