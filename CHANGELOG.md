@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.8](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.3.7...v2.3.8) (2024-07-06)
+
+
+### Bug Fixes
+
+* handle movie matching better ([3a0d5a4](https://github.com/media-data-hub/jellyfin-plugin/commit/3a0d5a4b04f62847ea6a37d4f67d6f958111fe7c))
+
 ## [2.3.7](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.3.6...v2.3.7) (2024-06-30)
 
 
