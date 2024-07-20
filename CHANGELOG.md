@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.9](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.3.8...v2.3.9) (2024-07-20)
+
+
+### Bug Fixes
+
+* handle edge case for date ([d513895](https://github.com/media-data-hub/jellyfin-plugin/commit/d51389520bf38134b9775469db9482bf4fbb5d51))
+
 ## [2.3.8](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.3.7...v2.3.8) (2024-07-06)
 
 
