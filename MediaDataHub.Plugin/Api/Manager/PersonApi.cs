@@ -33,6 +33,6 @@ public partial class MediaDataHubApiManager : IPersonApi
 
   private static string JoinDobFilter(string filter, int? year)
   {
-    return year == null ? filter : $"({filter}) && ((dob>='{year}-01-01' && dob<='{year}-12-31') || dob='')";
+    return year == null ? filter : $"({filter}) && ((dob>='{year}-01-01' && dob<'{year + 1}-01-01') || dob='')";
   }
 }

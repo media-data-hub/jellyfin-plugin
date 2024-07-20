@@ -40,6 +40,6 @@ public partial class MediaDataHubApiManager : IMovieApi
 
   private static string JoinReleaseDateFilter(string filter, int? year)
   {
-    return year == null ? filter : $"({filter}) && (releaseDate>='{year}-01-01' && releaseDate<='{year}-12-31')";
+    return year == null ? filter : $"({filter}) && (releaseDate>='{year}-01-01' && releaseDate<'{year + 1}-01-01')";
   }
 }

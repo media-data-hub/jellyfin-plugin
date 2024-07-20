@@ -38,6 +38,6 @@ public partial class MediaDataHubApiManager : ITvSeriesApi
 
   private static string JoinFirstAirDateFilter(string filter, int? year)
   {
-    return year == null ? filter : $"({filter}) && (firstAirDate>='{year}-01-01' && firstAirDate<='{year}-12-31')";
+    return year == null ? filter : $"({filter}) && (firstAirDate>='{year}-01-01' && firstAirDate<'{year + 1}-01-01')";
   }
 }
