@@ -121,18 +121,30 @@ public class VersionManager
     await video.UpdateToRepositoryAsync(ItemUpdateType.MetadataEdit, CancellationToken.None).ConfigureAwait(false);
   }
 
+  private static List<Video> FlatVideos(Video video)
+  {
+    var videos = new List<Video> { video };
+    video.SetPrimaryVersionId(null);
+    videos.AddRange(video.GetLinkedAlternateVersions().SelectMany(FlatVideos));
+    video.LinkedAlternateVersions = [];
+    return videos;
+  }
+
   // https://github.com/jellyfin/jellyfin/blob/master/Jellyfin.Api/Controllers/VideosController.cs
   private static async void MergeVideos(IEnumerable<Video> videos)
   {
-    if (videos.Count() < 2)
+    var items = videos.SelectMany(FlatVideos)
+    .OrderBy(i => i.Video3DFormat.HasValue || i.VideoType != VideoType.VideoFile ? 1 : 0)
+    .OrderByDescending(i => i.GetDefaultVideoStream()?.Width ?? 0)
+    .OrderByDescending(i => i.GetMediaStreams().Where(m => m.Type == MediaStreamType.Audio).Count())
+    .OrderByDescending(i => i.GetMediaStreams().Where(m => m.Type == MediaStreamType.Subtitle).Count());
+
+    if (items.Count() < 2)
     {
       return;
     }
-    List<Video> items = videos.OrderBy(i => i.Id).ToList();
-    var primaryVersion = items.FirstOrDefault(i => i.MediaSourceCount > 1 && string.IsNullOrEmpty(i.PrimaryVersionId)) ?? items
-          .OrderBy(i => i.Video3DFormat.HasValue || i.VideoType != VideoType.VideoFile ? 1 : 0)
-          .ThenByDescending(i => i.GetDefaultVideoStream()?.Width ?? 0)
-          .First();
+
+    var primaryVersion = items.First();
     var alternateVersionsOfPrimary = primaryVersion.LinkedAlternateVersions.ToList();
 
     foreach (var item in items.Where(i => !i.Id.Equals(primaryVersion.Id)))
