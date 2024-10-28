@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.10](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.3.9...v2.3.10) (2024-10-28)
+
+
+### Bug Fixes
+
+* update MergeVideos ([adaf5ca](https://github.com/media-data-hub/jellyfin-plugin/commit/adaf5ca0ca96327735a84729bd8bfb491e42bbe8))
+
 ## [2.3.9](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.3.8...v2.3.9) (2024-07-20)
 
 
