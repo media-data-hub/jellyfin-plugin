@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.2](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.4.1...v2.4.2) (2025-03-19)
+
+
+### Bug Fixes
+
+* Check for empty ([b8fad1f](https://github.com/media-data-hub/jellyfin-plugin/commit/b8fad1ffc9d1c214d87dfdba19cd6b995a0097f9))
+
 ## [2.4.1](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.4.0...v2.4.1) (2025-03-19)
 
 
