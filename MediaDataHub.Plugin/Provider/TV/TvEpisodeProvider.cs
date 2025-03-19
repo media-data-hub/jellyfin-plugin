@@ -77,10 +77,53 @@ public class TvEpisodeProvider : MediaDataHubBaseProvider<Model.TvEpisode, Episo
         results.RemoveAt(0);
         foreach (var detail in results)
         {
-          result.Item.Name += $" / {detail.Item.Name}";
-          result.Item.OriginalTitle += $" / {detail.Item.OriginalTitle}";
-          result.Item.Overview += $"<br/>\n<br/>\n{detail.Item.Overview}";
-          result.Item.Tagline += $" / {detail.Item.Tagline}";
+          if (!string.IsNullOrWhiteSpace(detail.Item.Name))
+          {
+            if (string.IsNullOrWhiteSpace(result.Item.Name))
+            {
+              result.Item.Name = detail.Item.Name;
+            }
+            else
+            {
+              result.Item.Name += $" / {detail.Item.Name}";
+            }
+          }
+
+          if (!string.IsNullOrWhiteSpace(detail.Item.OriginalTitle))
+          {
+            if (string.IsNullOrWhiteSpace(result.Item.OriginalTitle))
+            {
+              result.Item.OriginalTitle = detail.Item.OriginalTitle;
+            }
+            else
+            {
+              result.Item.OriginalTitle += $" / {detail.Item.OriginalTitle}";
+            }
+          }
+
+          if (!string.IsNullOrWhiteSpace(detail.Item.Overview))
+          {
+            if (string.IsNullOrWhiteSpace(result.Item.Overview))
+            {
+              result.Item.Overview = detail.Item.Overview;
+            }
+            else
+            {
+              result.Item.Overview += $"<br/>\n<br/>\n{detail.Item.Overview}";
+            }
+          }
+
+          if (!string.IsNullOrWhiteSpace(detail.Item.Tagline))
+          {
+            if (string.IsNullOrWhiteSpace(result.Item.Tagline))
+            {
+              result.Item.Tagline = detail.Item.Tagline;
+            }
+            else
+            {
+              result.Item.Tagline += $" / {detail.Item.Tagline}";
+            }
+          }
           foreach (var tag in detail.Item.Tags)
           {
             if (!result.Item.Tags.Contains(tag))
