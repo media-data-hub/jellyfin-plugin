@@ -109,7 +109,7 @@ public class TvEpisodeProvider : MediaDataHubBaseProvider<Model.TvEpisode, Episo
             }
             else
             {
-              result.Item.Overview += $"<br/>\n<br/>\n{detail.Item.Overview}";
+              result.Item.Overview += $"<br/>\n<br/>\n<br/>\n{detail.Item.Overview}";
             }
           }
 
