@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.4](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.4.3...v2.4.4) (2025-03-19)
+
+
+### Bug Fixes
+
+* Add IndexNumberEnd ([78f2691](https://github.com/media-data-hub/jellyfin-plugin/commit/78f269127d1f6bd839238135d726ba44f2d258e9))
+
 ## [2.4.3](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.4.2...v2.4.3) (2025-03-19)
 
 
