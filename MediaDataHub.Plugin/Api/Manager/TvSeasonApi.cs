@@ -11,7 +11,7 @@ public partial class MediaDataHubApiManager : ITvSeasonApi
 
   public Task<TvSeasonDetail> GetTvSeasonDetailById(string id, CancellationToken cancellationToken)
   {
-    return GetDetailStaffById<TvSeasonDetail>(Collections.TvSeason, Collections.TvSeasonStaff, "tvSeason", MovieDetail.Query, id, cancellationToken);
+    return GetDetailStaffById<TvSeasonDetail>(Collections.TvSeason, Collections.TvSeasonStaff, "tvSeason", TvSeasonDetail.Query, id, cancellationToken);
   }
 
   public async Task<TvSeasonDetail?> SearchTvSeason(string seriesId, int seasonNumber, CancellationToken cancellationToken)

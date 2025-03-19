@@ -7,6 +7,7 @@ using MediaBrowser.Model.Providers;
 using MediaDataHub.Plugin.Api;
 using MediaDataHub.Plugin.Api.Manager;
 using Model = MediaDataHub.Plugin.Api.Model;
+using Jellyfin.Extensions;
 
 namespace MediaDataHub.Plugin.Provider.TV;
 
@@ -50,13 +51,82 @@ public class TvEpisodeProvider : MediaDataHubBaseProvider<Model.TvEpisode, Episo
 
     try
     {
-      IMetadataResult<Episode, EpisodeInfo>? detail = await _apiManager.SearchTvEpisode(seriesId, seasonNumber.GetValueOrDefault(), episodeNumber.GetValueOrDefault(), cancellationToken).ConfigureAwait(false);
-      if (detail == null)
+      if (info.IndexNumberEnd.HasValue)
       {
-        _logger.LogInformation("GetMetadata (No detail)");
-        return new MetadataResult<Episode>();
+        var episodeNumberEnd = info.IndexNumberEnd;
+        IEnumerable<IMetadataResult<Episode, EpisodeInfo>> details = await _apiManager
+        .SearchTvEpisodes(
+          seriesId,
+          seasonNumber.GetValueOrDefault(),
+          episodeNumber.GetValueOrDefault(),
+          episodeNumberEnd.GetValueOrDefault(),
+          cancellationToken
+        )
+        .ConfigureAwait(false);
+        var results = details.Select(detail => detail.ToMetadataResult(info)).ToList();
+        if (results.Count <= 0)
+        {
+          _logger.LogInformation("GetMetadata (No detail)");
+          return new MetadataResult<Episode>();
+        }
+        var result = results.First();
+        if (results.Count == 1)
+        {
+          return result;
+        }
+        results.RemoveAt(0);
+        foreach (var detail in details.Select(detail => detail.ToMetadataResult(info)))
+        {
+          result.Item.Name += $"/ {detail.Item.Name}";
+          result.Item.OriginalTitle += $"/ {detail.Item.OriginalTitle}";
+          result.Item.Overview += $"<br/>\n<br/>\n{detail.Item.OriginalTitle}";
+          result.Item.Tagline += $"/ {detail.Item.Tagline}";
+          foreach (var tag in detail.Item.Tags)
+          {
+            if (!result.Item.Tags.Contains(tag))
+            {
+              result.Item.Tags = [.. result.Item.Tags, tag];
+            }
+          }
+          foreach (var genre in detail.Item.Genres)
+          {
+            if (!result.Item.Genres.Contains(genre))
+            {
+              result.Item.Genres = [.. result.Item.Genres, genre];
+            }
+          }
+          foreach (var studio in detail.Item.Studios)
+          {
+            if (!result.Item.Studios.Contains(studio))
+            {
+              result.Item.Studios = [.. result.Item.Studios, studio];
+            }
+          }
+          foreach (var location in detail.Item.ProductionLocations)
+          {
+            if (!result.Item.ProductionLocations.Contains(location))
+            {
+              result.Item.ProductionLocations = [.. result.Item.ProductionLocations, location];
+            }
+          }
+          result.Item.EndDate = detail.Item.EndDate;
+          foreach (var person in detail.People)
+          {
+            result.AddPerson(person);
+          }
+        }
+        return result;
       }
-      return detail.ToMetadataResult(info);
+      else
+      {
+        IMetadataResult<Episode, EpisodeInfo>? detail = await _apiManager.SearchTvEpisode(seriesId, seasonNumber.GetValueOrDefault(), episodeNumber.GetValueOrDefault(), cancellationToken).ConfigureAwait(false);
+        if (detail == null)
+        {
+          _logger.LogInformation("GetMetadata (No detail)");
+          return new MetadataResult<Episode>();
+        }
+        return detail.ToMetadataResult(info);
+      }
     }
     catch (Model.ApiException e)
     {
@@ -64,6 +134,7 @@ public class TvEpisodeProvider : MediaDataHubBaseProvider<Model.TvEpisode, Episo
       return new MetadataResult<Episode>();
     }
   }
+
   /// <inheritdoc />
   protected override Task<Model.TvEpisode> GetById(string id, CancellationToken cancellationToken)
   {
