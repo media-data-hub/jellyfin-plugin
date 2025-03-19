@@ -158,6 +158,7 @@ public class TvEpisodeProvider : MediaDataHubBaseProvider<Model.TvEpisode, Episo
             result.AddPerson(person);
           }
         }
+        result.Item.IndexNumberEnd = episodeNumberEnd;
         return result;
       }
       else
