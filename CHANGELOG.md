@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.0](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.3.10...v2.4.0) (2025-03-19)
+
+
+### Features
+
+* Add multiple episodes support ([2cae81b](https://github.com/media-data-hub/jellyfin-plugin/commit/2cae81bbbf94d5c80fe9b7e9f0f75a2ecba84409))
+
 ## [2.3.10](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.3.9...v2.3.10) (2024-10-28)
 
 
