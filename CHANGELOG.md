@@ -1,5 +1,34 @@
 # Changelog
 
+## [2.5.0](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.4.4...v2.5.0) (2025-03-19)
+
+
+### Features
+
+* Add multiple episodes support ([2cae81b](https://github.com/media-data-hub/jellyfin-plugin/commit/2cae81bbbf94d5c80fe9b7e9f0f75a2ecba84409))
+* add series status support ([b749fb7](https://github.com/media-data-hub/jellyfin-plugin/commit/b749fb7716c0453802eb01ebb0b3f5561c7ad2be))
+* support Jellyfin 10.9.1 ([#23](https://github.com/media-data-hub/jellyfin-plugin/issues/23)) ([8c2a3c6](https://github.com/media-data-hub/jellyfin-plugin/commit/8c2a3c64fcd38065657ed3bd4c51a5b02c8d9a0f))
+
+
+### Bug Fixes
+
+* Add IndexNumberEnd ([78f2691](https://github.com/media-data-hub/jellyfin-plugin/commit/78f269127d1f6bd839238135d726ba44f2d258e9))
+* change targetAbi  to 10.9.1.0 ([7a60ebd](https://github.com/media-data-hub/jellyfin-plugin/commit/7a60ebd114c5051ed05a59d7a342c953c9005c1d))
+* change targetAbi  to 10.9.2.0 ([828ae9a](https://github.com/media-data-hub/jellyfin-plugin/commit/828ae9a558b1d26db66027f6227c0aaa94173d08))
+* Check for empty ([b8fad1f](https://github.com/media-data-hub/jellyfin-plugin/commit/b8fad1ffc9d1c214d87dfdba19cd6b995a0097f9))
+* escape ' in name ([36181dd](https://github.com/media-data-hub/jellyfin-plugin/commit/36181dddb8f146d86298f7dc7868049e0f6197c0))
+* Formatting ([21d82d0](https://github.com/media-data-hub/jellyfin-plugin/commit/21d82d060b561d6436c915d94550c6500fb6ebd3))
+* Formatting ([2d12b61](https://github.com/media-data-hub/jellyfin-plugin/commit/2d12b619c3992b4e02d65fad6b2a8a91b7c46607))
+* handle edge case for date ([d513895](https://github.com/media-data-hub/jellyfin-plugin/commit/d51389520bf38134b9775469db9482bf4fbb5d51))
+* handle movie matching better ([3a0d5a4](https://github.com/media-data-hub/jellyfin-plugin/commit/3a0d5a4b04f62847ea6a37d4f67d6f958111fe7c))
+* handle TvEpisode ParentIndexNumber ([f6c7f52](https://github.com/media-data-hub/jellyfin-plugin/commit/f6c7f521be07d523aed029a3297201fdf8156166))
+* handle TvEpisode tvSeason ([2f239f7](https://github.com/media-data-hub/jellyfin-plugin/commit/2f239f7b447c087d0c9317249e439d2ad9203a54))
+* improve collection task performance ([25a3e47](https://github.com/media-data-hub/jellyfin-plugin/commit/25a3e473354003fa9a5570f85668d6ed6098acf8))
+* remove thumb fallback ([7750aa6](https://github.com/media-data-hub/jellyfin-plugin/commit/7750aa68dce1439bf6431de8042d47d9e5b5f354))
+* update datatime format ([79ac3b0](https://github.com/media-data-hub/jellyfin-plugin/commit/79ac3b005cdcfb0981783ebb38ea7bfbfa165413))
+* update MergeVideos ([adaf5ca](https://github.com/media-data-hub/jellyfin-plugin/commit/adaf5ca0ca96327735a84729bd8bfb491e42bbe8))
+* update priority for non actor ([3479739](https://github.com/media-data-hub/jellyfin-plugin/commit/3479739ee6e392ec2a7ce143201b499ef94f1046))
+
 ## [2.4.4](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.4.3...v2.4.4) (2025-03-19)
 
 
