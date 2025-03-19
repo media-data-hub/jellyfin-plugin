@@ -75,12 +75,12 @@ public class TvEpisodeProvider : MediaDataHubBaseProvider<Model.TvEpisode, Episo
           return result;
         }
         results.RemoveAt(0);
-        foreach (var detail in details.Select(detail => detail.ToMetadataResult(info)))
+        foreach (var detail in results)
         {
-          result.Item.Name += $"/ {detail.Item.Name}";
-          result.Item.OriginalTitle += $"/ {detail.Item.OriginalTitle}";
-          result.Item.Overview += $"<br/>\n<br/>\n{detail.Item.OriginalTitle}";
-          result.Item.Tagline += $"/ {detail.Item.Tagline}";
+          result.Item.Name += $" / {detail.Item.Name}";
+          result.Item.OriginalTitle += $" / {detail.Item.OriginalTitle}";
+          result.Item.Overview += $"<br/>\n<br/>\n{detail.Item.Overview}";
+          result.Item.Tagline += $" / {detail.Item.Tagline}";
           foreach (var tag in detail.Item.Tags)
           {
             if (!result.Item.Tags.Contains(tag))
