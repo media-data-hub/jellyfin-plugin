@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.1](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.4.0...v2.4.1) (2025-03-19)
+
+
+### Bug Fixes
+
+* Formatting ([2d12b61](https://github.com/media-data-hub/jellyfin-plugin/commit/2d12b619c3992b4e02d65fad6b2a8a91b7c46607))
+
 ## [2.4.0](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.3.10...v2.4.0) (2025-03-19)
 
 
