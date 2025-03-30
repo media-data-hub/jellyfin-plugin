@@ -68,8 +68,12 @@ public class MediaDataHubApiClient : IDisposable
     requestMessage.Content = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
     using var response = await _httpClient.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
     if (response.StatusCode != HttpStatusCode.OK)
-      throw ApiException.FromResponse(response);
-    _logger.LogTrace("API returned response with status code {StatusCode}", response.StatusCode);
+    {
+      var text = response.Content.ReadAsStreamAsync(cancellationToken).Result;
+      var json = await JsonSerializer.DeserializeAsync<T>(response.Content.ReadAsStreamAsync(cancellationToken).Result, (JsonSerializerOptions?)null, cancellationToken).ConfigureAwait(false);
+      _logger.LogError("API returned response with status code {StatusCode} {Json}", response.StatusCode, json);
+    }
+    _logger.LogInformation("API returned response with status code {StatusCode}", response.StatusCode);
     var auth = await JsonSerializer.DeserializeAsync<Auth>(response.Content.ReadAsStreamAsync(cancellationToken).Result, (JsonSerializerOptions?)null, cancellationToken).ConfigureAwait(false) ?? throw new ApiException("Unexpected null return value.");
     return auth.Token;
   }
@@ -82,8 +86,14 @@ public class MediaDataHubApiClient : IDisposable
     requestMessage.Headers.Add("Authorization", token);
     using var response = await _httpClient.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
     if (response.StatusCode != HttpStatusCode.OK)
+    {
+
+      var text = response.Content.ReadAsStreamAsync(cancellationToken).Result;
+      var json = await JsonSerializer.DeserializeAsync<T>(response.Content.ReadAsStreamAsync(cancellationToken).Result, (JsonSerializerOptions?)null, cancellationToken).ConfigureAwait(false);
+      _logger.LogError("API returned response with status code {StatusCode} {Json}", response.StatusCode, json);
       throw ApiException.FromResponse(response);
-    _logger.LogTrace("API returned response with status code {StatusCode}", response.StatusCode);
+    }
+    _logger.LogInformation("API returned response with status code {StatusCode}", response.StatusCode);
     return await JsonSerializer.DeserializeAsync<T>(response.Content.ReadAsStreamAsync(cancellationToken).Result, (JsonSerializerOptions?)null, cancellationToken).ConfigureAwait(false) ?? throw new ApiException("Unexpected null return value.");
   }
 
