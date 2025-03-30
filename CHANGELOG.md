@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.7](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.4.6...v2.4.7) (2025-03-30)
+
+
+### Bug Fixes
+
+* Escape name ([35cb320](https://github.com/media-data-hub/jellyfin-plugin/commit/35cb320ec1a5cc02e4fca06a3973019f0bdfc1f7))
+
 ## [2.4.6](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.4.5...v2.4.6) (2025-03-30)
 
 
