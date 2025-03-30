@@ -1,17 +1,10 @@
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace MediaDataHub.Plugin.Api.Model;
 
 [Serializable]
 public class ApiException : Exception
 {
-
-  private record ValidationResponse
-  {
-    [JsonPropertyName("message")]
-    public string Message { get; set; } = "";
-  }
 
   public ApiException(string message) : base(message)
   {

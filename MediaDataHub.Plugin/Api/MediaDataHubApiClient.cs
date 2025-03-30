@@ -70,7 +70,7 @@ public class MediaDataHubApiClient : IDisposable
     if (response.StatusCode != HttpStatusCode.OK)
     {
       var text = response.Content.ReadAsStreamAsync(cancellationToken).Result;
-      var json = await JsonSerializer.DeserializeAsync<T>(response.Content.ReadAsStreamAsync(cancellationToken).Result, (JsonSerializerOptions?)null, cancellationToken).ConfigureAwait(false);
+      var json = await JsonSerializer.DeserializeAsync<ValidationResponse>(response.Content.ReadAsStreamAsync(cancellationToken).Result, (JsonSerializerOptions?)null, cancellationToken).ConfigureAwait(false);
       _logger.LogError("API returned response with status code {StatusCode} {Json}", response.StatusCode, json);
     }
     _logger.LogInformation("API returned response with status code {StatusCode}", response.StatusCode);
@@ -89,7 +89,7 @@ public class MediaDataHubApiClient : IDisposable
     {
 
       var text = response.Content.ReadAsStreamAsync(cancellationToken).Result;
-      var json = await JsonSerializer.DeserializeAsync<T>(response.Content.ReadAsStreamAsync(cancellationToken).Result, (JsonSerializerOptions?)null, cancellationToken).ConfigureAwait(false);
+      var json = await JsonSerializer.DeserializeAsync<ValidationResponse>(response.Content.ReadAsStreamAsync(cancellationToken).Result, (JsonSerializerOptions?)null, cancellationToken).ConfigureAwait(false);
       _logger.LogError("API returned response with status code {StatusCode} {Json}", response.StatusCode, json);
       throw ApiException.FromResponse(response);
     }
