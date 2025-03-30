@@ -16,7 +16,7 @@ public partial class MediaDataHubApiManager : ITvSeriesApi
 
   public Task<IEnumerable<TvSeries>> SearchTvSeries(string name, int? year, CancellationToken cancellationToken)
   {
-    name = name.Replace("'", "\\'");
+    name = escapeName(name);
     var filters = new List<string> {
       JoinFirstAirDateFilter($"matchName='{name}'", year),
       JoinFirstAirDateFilter($"name='{name}' || sortName='{name}'", year),

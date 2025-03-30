@@ -1,5 +1,5 @@
 using Microsoft.Extensions.Logging;
-using MediaDataHub.Plugin.Api.Model;
+using System.Web;
 
 namespace MediaDataHub.Plugin.Api.Manager;
 
@@ -35,5 +35,10 @@ public partial class MediaDataHubApiManager : IDisposable
   {
     Dispose(true);
     GC.SuppressFinalize(this);
+  }
+
+  protected string escapeName(string name)
+  {
+    return HttpUtility.UrlEncode(name.Replace("'", "\\'")); ;
   }
 }

@@ -69,9 +69,7 @@ public class MediaDataHubApiClient : IDisposable
     using var response = await _httpClient.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
     if (response.StatusCode != HttpStatusCode.OK)
     {
-      var text = response.Content.ReadAsStreamAsync(cancellationToken).Result;
-      var json = await JsonSerializer.DeserializeAsync<ValidationResponse>(response.Content.ReadAsStreamAsync(cancellationToken).Result, (JsonSerializerOptions?)null, cancellationToken).ConfigureAwait(false);
-      _logger.LogError("API returned response with status code {StatusCode} {Json}", response.StatusCode, json);
+      throw ApiException.FromResponse(response);
     }
     _logger.LogInformation("API returned response with status code {StatusCode}", response.StatusCode);
     var auth = await JsonSerializer.DeserializeAsync<Auth>(response.Content.ReadAsStreamAsync(cancellationToken).Result, (JsonSerializerOptions?)null, cancellationToken).ConfigureAwait(false) ?? throw new ApiException("Unexpected null return value.");
@@ -90,7 +88,7 @@ public class MediaDataHubApiClient : IDisposable
 
       var text = response.Content.ReadAsStreamAsync(cancellationToken).Result;
       var json = await JsonSerializer.DeserializeAsync<ValidationResponse>(response.Content.ReadAsStreamAsync(cancellationToken).Result, (JsonSerializerOptions?)null, cancellationToken).ConfigureAwait(false);
-      _logger.LogError("API returned response with status code {StatusCode} {Json}", response.StatusCode, json);
+      _logger.LogError("API returned response with status code {StatusCode} {url}", response.StatusCode, url);
       throw ApiException.FromResponse(response);
     }
     _logger.LogInformation("API returned response with status code {StatusCode}", response.StatusCode);

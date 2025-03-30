@@ -16,7 +16,7 @@ public partial class MediaDataHubApiManager : IPersonApi
 
   public Task<IEnumerable<Person>> SearchPeople(string name, int? year, CancellationToken cancellationToken)
   {
-    name = name.Replace("'", "\\'");
+    name = escapeName(name);
     var filters = new List<string> {
       JoinDobFilter($"matchName='{name}'", year),
       JoinDobFilter($"name='{name}' || sortName='{name}'", year),
