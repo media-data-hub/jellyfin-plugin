@@ -2,7 +2,6 @@ using System.Net;
 using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.WebUtilities;
 using MediaDataHub.Plugin.Api.Model;
 
 namespace MediaDataHub.Plugin.Api;
@@ -79,7 +78,8 @@ public class MediaDataHubApiClient : IDisposable
   {
     var host = MediaDataHubUtils.GetHost();
     token ??= await AuthWithPassword(cancellationToken).ConfigureAwait(false);
-    var remoteUrl = query != null ? QueryHelpers.AddQueryString(string.Concat(host, url), query) : string.Concat(host, url);
+    var remoteUrl = MediaDataHubUtils.AddQueryString(string.Concat(host, url), query);
+    _logger.LogInformation("Getting from {remoteUrl}", remoteUrl);
     using var requestMessage = new HttpRequestMessage(HttpMethod.Get, remoteUrl);
     requestMessage.Headers.Add("Authorization", token);
     using var response = await _httpClient.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);

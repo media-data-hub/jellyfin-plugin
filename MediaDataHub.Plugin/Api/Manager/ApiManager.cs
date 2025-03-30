@@ -39,6 +39,6 @@ public partial class MediaDataHubApiManager : IDisposable
 
   protected string escapeName(string name)
   {
-    return HttpUtility.UrlEncode(name.Replace("'", "\\'")); ;
+    return name.Replace("'", "\\'");
   }
 }

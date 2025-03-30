@@ -1,5 +1,6 @@
-using Microsoft.AspNetCore.WebUtilities;
 using MediaDataHub.Plugin.Configuration;
+using System.Text;
+using System.Web;
 
 namespace MediaDataHub.Plugin.Api;
 
@@ -10,7 +11,7 @@ public static class MediaDataHubUtils
     var config = GetConfiguration();
     var host = GetHost(config);
     var remoteUrl = $"{host}/api/files/{record.MetaCollectionName}/{record.Id}/{fileName}";
-    return string.IsNullOrEmpty(thumb) ? remoteUrl : QueryHelpers.AddQueryString(remoteUrl, new Dictionary<string, string?> { { "thumb", thumb } });
+    return string.IsNullOrEmpty(thumb) ? remoteUrl : AddQueryString(remoteUrl, new Dictionary<string, string?> { { "thumb", thumb } });
   }
 
   public static PluginConfiguration GetConfiguration()
@@ -22,5 +23,22 @@ public static class MediaDataHubUtils
   {
     config ??= GetConfiguration();
     return string.IsNullOrEmpty(config.Host) ? throw new Exception("Host cannot be empty", null) : config.Host;
+  }
+
+  public static string AddQueryString(string baseUrl, IDictionary<string, string?>? query)
+  {
+    if (query == null)
+    {
+      return baseUrl;
+    }
+    var sb = new StringBuilder(baseUrl);
+    sb.Append('?');
+    sb.Append(query.Select(parameter =>
+    {
+      return $"{HttpUtility.UrlEncode(parameter.Key)}={HttpUtility.UrlEncode(parameter.Value)}";
+    })
+    .Aggregate((a, b) => a + "&" + b)
+    );
+    return sb.ToString();
   }
 }
