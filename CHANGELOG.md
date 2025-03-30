@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.8](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.4.7...v2.4.8) (2025-03-30)
+
+
+### Bug Fixes
+
+* Fix pocketbase not handle ; correctly ([89718a2](https://github.com/media-data-hub/jellyfin-plugin/commit/89718a216c894660f0ae58c643de308ee7ec0049))
+
 ## [2.4.7](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.4.6...v2.4.7) (2025-03-30)
 
 
