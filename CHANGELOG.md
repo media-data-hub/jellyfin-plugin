@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.5.0](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.4.8...v2.5.0) (2025-04-08)
+
+
+### Features
+
+* Add ContentRatings to MusicAlbum ([392ee44](https://github.com/media-data-hub/jellyfin-plugin/commit/392ee449e39edacc10f9f4afb84c4bd865e6f2a9))
+
+
+### Bug Fixes
+
+* Update Jellyfin packages ([0913692](https://github.com/media-data-hub/jellyfin-plugin/commit/09136922ca447f7eee30574b8ff57c894a65c0fc))
+
 ## [2.4.8](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.4.7...v2.4.8) (2025-03-30)
 
 
