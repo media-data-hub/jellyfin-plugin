@@ -24,6 +24,9 @@ public class MusicAlbum : Record, IRemoteSearchResult, IRemoteImageInfo
   [JsonConverter(typeof(DateTimeFormatConverter))]
   public DateTime ReleaseDate { get; set; }
 
+  [JsonPropertyName("contentRatings")]
+  public string ContentRatings { get; set; } = "";
+
   [JsonPropertyName("rating")]
   public float Rating { get; set; }
 
@@ -98,5 +101,6 @@ public class MusicAlbumDetail : MusicAlbum, IMetadataResult<Entities.MusicAlbum,
   public string[] Tags => Expand.Tags.Select(tag => tag.Name).ToArray();
   public string[] Genres => Expand.Genres.Select(tag => tag.Name).ToArray();
   public string[] ProductionLocations => [Expand.Country.Name];
+  public string? OfficialRating => ContentRatings;
   public float? CommunityRating => Convert.ToSingle(Rating);
 }
