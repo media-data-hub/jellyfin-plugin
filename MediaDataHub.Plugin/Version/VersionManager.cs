@@ -135,9 +135,10 @@ public class VersionManager
   {
     var items = videos.SelectMany(FlatVideos)
     .OrderBy(i => i.Video3DFormat.HasValue || i.VideoType != VideoType.VideoFile ? 1 : 0)
-    .OrderByDescending(i => i.GetDefaultVideoStream()?.Width ?? 0)
-    .OrderByDescending(i => i.GetMediaStreams().Where(m => m.Type == MediaStreamType.Audio).Count())
-    .OrderByDescending(i => i.GetMediaStreams().Where(m => m.Type == MediaStreamType.Subtitle).Count());
+    .ThenByDescending(i => i.GetDefaultVideoStream()?.Width ?? 0)
+    .ThenBy(i => i.GetMediaSources(false).First().Name)
+    .ThenByDescending(i => i.GetMediaStreams().Where(m => m.Type == MediaStreamType.Audio).Count())
+    .ThenByDescending(i => i.GetMediaStreams().Where(m => m.Type == MediaStreamType.Subtitle).Count());
 
     if (items.Count() < 2)
     {
