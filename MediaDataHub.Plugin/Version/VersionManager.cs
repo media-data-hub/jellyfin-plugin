@@ -159,11 +159,11 @@ public class VersionManager
     var primaryVersion = items.First();
     var alternateVersionsOfPrimary = primaryVersion.LinkedAlternateVersions.ToList();
 
-    _logger.LogInformation("Merging {Name} ({id})", Path.GetFileNameWithoutExtension(primaryVersion.Path) ?? "", primaryVersion.Id);
+    _logger.LogInformation("Merging {path} ({id})", Path.GetFileNameWithoutExtension(primaryVersion.Path) ?? "", primaryVersion.Id);
 
     foreach (var item in items.Where(i => !i.Id.Equals(primaryVersion.Id)))
     {
-      _logger.LogInformation("Merging {Name} ({id}) to {Name} ({id})", Path.GetFileNameWithoutExtension(item.Path), item.Id, Path.GetFileNameWithoutExtension(primaryVersion.Path) ?? "", primaryVersion.Id);
+      _logger.LogInformation("Merging {itemPath} ({itemId}) to {primaryPath} ({primaryId})", Path.GetFileNameWithoutExtension(item.Path), item.Id, Path.GetFileNameWithoutExtension(primaryVersion.Path) ?? "", primaryVersion.Id);
       item.SetPrimaryVersionId(primaryVersion.Id.ToString("N", CultureInfo.InvariantCulture));
       item.LinkedAlternateVersions = [];
       await item.UpdateToRepositoryAsync(ItemUpdateType.MetadataEdit, CancellationToken.None).ConfigureAwait(false);
