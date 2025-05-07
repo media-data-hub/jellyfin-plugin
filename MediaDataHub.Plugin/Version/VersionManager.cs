@@ -34,13 +34,13 @@ public class VersionManager
     var total = duplications.Count;
     var current = 0;
     //foreach grouping, merge
-    foreach (var e in duplications)
+    Parallel.ForEach(duplications, v =>
     {
       current++;
-      var percent = current / (double)total * 100;
+      var percent = (double)current / total * 100;
       progress?.Report((int)percent);
-      MergeVideos(e.ToList().Where(e => e.PrimaryVersionId == null && !e.GetLinkedAlternateVersions().Any()));
-    }
+      MergeVideos(v.Where(m => m.PrimaryVersionId == null && !m.GetLinkedAlternateVersions().Any()).ToList());
+    });
     progress?.Report(100);
   }
 
@@ -50,17 +50,25 @@ public class VersionManager
     var total = episodes.Length;
     var current = 0;
     //foreach grouping, merge
-    foreach (var e in episodes)
+    foreach (var episode in episodes)
     {
       current++;
-      var percent = ((double)current / (double)total) * 100;
+      var percent = (double)current / total * 100;
       progress?.Report((int)percent);
 
-      _logger.LogInformation($"Spliting {e.IndexNumber} ({e.SeriesName})");
-      SplitVideo(e);
+      if (episode is null)
+      {
+        continue;
+      }
+      if (episode.PrimaryVersionId is null && !episode.GetLinkedAlternateVersions().Any())
+      {
+        continue;
+      }
+
+      _logger.LogInformation("Splitting {IndexNumber} ({SeriesName})", episode.IndexNumber, episode.SeriesName);
+      SplitVideo(episode);
     }
     progress?.Report(100);
-
   }
 
   public void MergeMovies(IProgress<double> progress)
@@ -72,12 +80,12 @@ public class VersionManager
     var total = duplications.Count;
     var current = 0;
     //foreach grouping, merge
-    Parallel.ForEach(duplications, m =>
+    Parallel.ForEach(duplications, v =>
     {
       current++;
-      var percent = current / (double)total * 100;
+      var percent = (double)current / total * 100;
       progress?.Report((int)percent);
-      MergeVideos(m.Where(m => m.PrimaryVersionId == null && !m.GetLinkedAlternateVersions().Any()).ToList()); //We only want non merged movies
+      MergeVideos(v.Where(m => m.PrimaryVersionId == null && !m.GetLinkedAlternateVersions().Any()).ToList());
     });
     progress?.Report(100);
   }
@@ -88,36 +96,38 @@ public class VersionManager
     var total = movies.Length;
     var current = 0;
     //foreach grouping, merge
-    Parallel.ForEach(movies, m =>
-     {
-       current++;
-       var percent = ((double)current / (double)total) * 100;
-       progress?.Report((int)percent);
+    foreach (var movie in movies)
+    {
+      current++;
+      var percent = (double)current / total * 100;
+      progress?.Report((int)percent);
 
-       _logger.LogInformation($"Spliting {m.Name} ({m.ProductionYear})");
-       SplitVideo(m);
-     }
-    );
+      if (movie is null)
+      {
+        continue;
+      }
+      if (movie.PrimaryVersionId is null && !movie.GetLinkedAlternateVersions().Any())
+      {
+        continue;
+      }
+
+      _logger.LogInformation("Splitting {Name} ({ProductionYear})", movie.Name, movie.ProductionYear);
+      SplitVideo(movie);
+    }
     progress?.Report(100);
   }
 
   private static async void SplitVideo(Video video)
   {
-    if (video is null)
-    {
-      return;
-    }
-
     foreach (var link in video.GetLinkedAlternateVersions())
     {
       link.SetPrimaryVersionId(null);
       link.LinkedAlternateVersions = [];
-
       await link.UpdateToRepositoryAsync(ItemUpdateType.MetadataEdit, CancellationToken.None).ConfigureAwait(false);
     }
 
-    video.LinkedAlternateVersions = [];
     video.SetPrimaryVersionId(null);
+    video.LinkedAlternateVersions = [];
     await video.UpdateToRepositoryAsync(ItemUpdateType.MetadataEdit, CancellationToken.None).ConfigureAwait(false);
   }
 
@@ -131,12 +141,13 @@ public class VersionManager
   }
 
   // https://github.com/jellyfin/jellyfin/blob/master/Jellyfin.Api/Controllers/VideosController.cs
-  private static async void MergeVideos(IEnumerable<Video> videos)
+  private async void MergeVideos(IEnumerable<Video> videos)
   {
     var items = videos.SelectMany(FlatVideos)
+    .DistinctBy(v => v.Id)
     .OrderBy(i => i.Video3DFormat.HasValue || i.VideoType != VideoType.VideoFile ? 1 : 0)
     .ThenByDescending(i => i.GetDefaultVideoStream()?.Width ?? 0)
-    .ThenBy(i => i.GetMediaSources(false).First().Name)
+    .ThenBy(i => i.GetMediaSources(false).First()?.Name ?? "")
     .ThenByDescending(i => i.GetMediaStreams().Where(m => m.Type == MediaStreamType.Audio).Count())
     .ThenByDescending(i => i.GetMediaStreams().Where(m => m.Type == MediaStreamType.Subtitle).Count());
 
@@ -148,37 +159,23 @@ public class VersionManager
     var primaryVersion = items.First();
     var alternateVersionsOfPrimary = primaryVersion.LinkedAlternateVersions.ToList();
 
+    _logger.LogInformation("Merging {Name} ({id})", primaryVersion.GetMediaSources(false).First()?.Name ?? "", primaryVersion.Id);
+
     foreach (var item in items.Where(i => !i.Id.Equals(primaryVersion.Id)))
     {
+      _logger.LogInformation("Merging {Name} ({id}) to {Name} ({id})", item.GetMediaSources(false).First()?.Name ?? "", item.Id, primaryVersion.GetMediaSources(false).First()?.Name ?? "", primaryVersion.Id);
       item.SetPrimaryVersionId(primaryVersion.Id.ToString("N", CultureInfo.InvariantCulture));
-
+      item.LinkedAlternateVersions = [];
       await item.UpdateToRepositoryAsync(ItemUpdateType.MetadataEdit, CancellationToken.None).ConfigureAwait(false);
 
       if (!alternateVersionsOfPrimary.Any(i => string.Equals(i.Path, item.Path, StringComparison.OrdinalIgnoreCase)))
       {
-        alternateVersionsOfPrimary.Add(new LinkedChild
-        {
-          Path = item.Path,
-          ItemId = item.Id
-        });
-      }
-
-      foreach (var linkedItem in item.LinkedAlternateVersions)
-      {
-        if (!alternateVersionsOfPrimary.Any(i => string.Equals(i.Path, linkedItem.Path, StringComparison.OrdinalIgnoreCase)))
-        {
-          alternateVersionsOfPrimary.Add(linkedItem);
-        }
-      }
-
-      if (item.LinkedAlternateVersions.Length > 0)
-      {
-        item.LinkedAlternateVersions = [];
-        await item.UpdateToRepositoryAsync(ItemUpdateType.MetadataEdit, CancellationToken.None).ConfigureAwait(false);
+        alternateVersionsOfPrimary.Add(new LinkedChild { Path = item.Path, ItemId = item.Id });
       }
     }
 
-    primaryVersion.LinkedAlternateVersions = alternateVersionsOfPrimary.ToArray();
+    primaryVersion.SetPrimaryVersionId(null);
+    primaryVersion.LinkedAlternateVersions = [.. alternateVersionsOfPrimary];
     await primaryVersion.UpdateToRepositoryAsync(ItemUpdateType.MetadataEdit, CancellationToken.None).ConfigureAwait(false);
   }
 
