@@ -147,7 +147,7 @@ public class VersionManager
     .DistinctBy(v => v.Id)
     .OrderBy(i => i.Video3DFormat.HasValue || i.VideoType != VideoType.VideoFile ? 1 : 0)
     .ThenByDescending(i => i.GetDefaultVideoStream()?.Width ?? 0)
-    .ThenBy(i => i.GetMediaSources(false).First()?.Name ?? "")
+    .ThenBy(i => Path.GetFileNameWithoutExtension(i.Path))
     .ThenByDescending(i => i.GetMediaStreams().Where(m => m.Type == MediaStreamType.Audio).Count())
     .ThenByDescending(i => i.GetMediaStreams().Where(m => m.Type == MediaStreamType.Subtitle).Count());
 
@@ -159,11 +159,11 @@ public class VersionManager
     var primaryVersion = items.First();
     var alternateVersionsOfPrimary = primaryVersion.LinkedAlternateVersions.ToList();
 
-    _logger.LogInformation("Merging {Name} ({id})", primaryVersion.GetMediaSources(false).First()?.Name ?? "", primaryVersion.Id);
+    _logger.LogInformation("Merging {Name} ({id})", Path.GetFileNameWithoutExtension(primaryVersion.Path) ?? "", primaryVersion.Id);
 
     foreach (var item in items.Where(i => !i.Id.Equals(primaryVersion.Id)))
     {
-      _logger.LogInformation("Merging {Name} ({id}) to {Name} ({id})", item.GetMediaSources(false).First()?.Name ?? "", item.Id, primaryVersion.GetMediaSources(false).First()?.Name ?? "", primaryVersion.Id);
+      _logger.LogInformation("Merging {Name} ({id}) to {Name} ({id})", Path.GetFileNameWithoutExtension(item.Path), item.Id, Path.GetFileNameWithoutExtension(primaryVersion.Path) ?? "", primaryVersion.Id);
       item.SetPrimaryVersionId(primaryVersion.Id.ToString("N", CultureInfo.InvariantCulture));
       item.LinkedAlternateVersions = [];
       await item.UpdateToRepositoryAsync(ItemUpdateType.MetadataEdit, CancellationToken.None).ConfigureAwait(false);
