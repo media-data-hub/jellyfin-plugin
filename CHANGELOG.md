@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.2](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.5.1...v2.5.2) (2025-05-07)
+
+
+### Bug Fixes
+
+* Improve merge and split ([91e6e41](https://github.com/media-data-hub/jellyfin-plugin/commit/91e6e41513255503f74021ee359fa0fdfbcd5e9b))
+
 ## [2.5.1](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.5.0...v2.5.1) (2025-05-06)
 
 
