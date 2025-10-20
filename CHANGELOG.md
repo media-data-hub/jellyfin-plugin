@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.6.0](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.5.4...v2.6.0) (2025-10-20)
+
+
+### Features
+
+* Update for Jellyfin 10.11 ([99eed0d](https://github.com/media-data-hub/jellyfin-plugin/commit/99eed0d6b6b3549aa5da8de0a886529fdce6f0c7))
+
+
+### Bug Fixes
+
+* Update trigger ([eb7faeb](https://github.com/media-data-hub/jellyfin-plugin/commit/eb7faeb0d591be9113b6fb04d5ccf2be806801f6))
+
 ## [2.5.4](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.5.3...v2.5.4) (2025-05-07)
 
 
