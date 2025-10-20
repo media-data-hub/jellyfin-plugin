@@ -37,4 +37,4 @@
 dotnet publish MediaDataHubPlugin.sln /property:GenerateFullPaths=true /consoleloggerparameters:NoSummary
 ```
 
-Copy `MediaDataHub.Plugin/bin/Debug/net8.0/publish/MediaDataHub.Plugin.dll` to Jellyfin Plugin folder.
+Copy `MediaDataHub.Plugin/bin/Debug/net9.0/publish/MediaDataHub.Plugin.dll` to Jellyfin Plugin folder.
