@@ -16,6 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       release-created: ${{ steps.release.outputs.release_created || false }}
+      tag-name: ${{ steps.release.outputs.tag_name }}
     steps:
       - id: release
         uses: googleapis/release-please-action@v5
@@ -37,7 +38,7 @@ jobs:
         with:
           dotnet-version: 10.0.x
       - run: |
-          PUBLISH_VERSION=${{ steps.release.outputs.tag_name }}
+          PUBLISH_VERSION=${{ needs.release-please.outputs.tag-name }}
           echo "PUBLISH_VERSION=${PUBLISH_VERSION#v}.0" >> $GITHUB_ENV
       - run: dotnet publish --configuration Release MediaDataHubPlugin.sln /property:GenerateFullPaths=true /consoleloggerparameters:NoSummary /property:Version=${PUBLISH_VERSION}
       - run: sudo apt-get install -y jq
@@ -46,6 +47,6 @@ jobs:
           mv ./MediaDataHub.Plugin/bin/Release/net9.0/publish/MediaDataHub.Plugin.dll MediaDataHub.Plugin.dll
           zip -r media-data-hub.zip meta.json MediaDataHub.Plugin.dll
           md5sum media-data-hub.zip | head -c 32 > checksum
-      - run: gh release upload ${{ steps.release.outputs.tag_name }} media-data-hub.zip checksum
+      - run: gh release upload ${{ needs.release-please.outputs.tag-name }} media-data-hub.zip checksum
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
