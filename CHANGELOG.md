@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.7.0](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.6.0...v2.7.0) (2026-09-15)
+
+
+### Features
+
+* Update for Jellyfin 12 ([18c0a52](https://github.com/media-data-hub/jellyfin-plugin/commit/18c0a52aa2a2f62e77d0c24b6412b36be021e4b3))
+
 ## [2.6.0](https://github.com/media-data-hub/jellyfin-plugin/compare/v2.5.4...v2.6.0) (2025-10-20)
 
 
