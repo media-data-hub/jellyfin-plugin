@@ -6,23 +6,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-dotnet@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: 9.0.x
+          dotnet-version: 10.0.x
       - run: dotnet publish --configuration Release MediaDataHubPlugin.sln /property:GenerateFullPaths=true /consoleloggerparameters:NoSummary
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: MediaDataHub.Plugin.dll
           path: MediaDataHub.Plugin/bin/Release/net9.0/publish/MediaDataHub.Plugin.dll
-  release-please:
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
-    permissions:
-      contents: write
-      pull-requests: write
-    steps:
-      - uses: google-github-actions/release-please-action@v4
-        id: release
-        with:
-          skip-github-release: true
+

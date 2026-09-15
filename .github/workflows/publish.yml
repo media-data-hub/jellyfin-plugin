@@ -1,41 +1,51 @@
-name: release
+name: publish
+
 on:
-  pull_request:
+  push:
     branches:
       - master
-    types:
-      - closed
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
 jobs:
   release-please:
+    name: release-please
     runs-on: ubuntu-latest
-    if: "github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'autorelease: pending')"
-    permissions:
-      contents: write
-      pull-requests: write
+    outputs:
+      release-created: ${{ steps.release.outputs.release_created || false }}
     steps:
-      - uses: google-github-actions/release-please-action@v4
-        id: release
-      - uses: actions/checkout@v5
-        if: ${{ steps.release.outputs.release_created }}
-      - uses: actions/setup-dotnet@v5
-        if: ${{ steps.release.outputs.release_created }}
+      - id: release
+        uses: googleapis/release-please-action@v5
         with:
-          dotnet-version: 9.0.x
+          config-file: .release-please/config.json
+          manifest-file: .release-please/manifest.json
+
+  publish-package:
+    name: publish-package
+    runs-on: ubuntu-latest
+    needs:
+      - release-please
+    permissions:
+      id-token: write
+    if: needs.release-please.outputs.release-created == 'true'
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
       - run: |
           PUBLISH_VERSION=${{ steps.release.outputs.tag_name }}
           echo "PUBLISH_VERSION=${PUBLISH_VERSION#v}.0" >> $GITHUB_ENV
-        if: ${{ steps.release.outputs.release_created }}
       - run: dotnet publish --configuration Release MediaDataHubPlugin.sln /property:GenerateFullPaths=true /consoleloggerparameters:NoSummary /property:Version=${PUBLISH_VERSION}
-        if: ${{ steps.release.outputs.release_created }}
       - run: sudo apt-get install -y jq
-        if: ${{ steps.release.outputs.release_created }}
       - run: |
           jq -c ".version = \"${PUBLISH_VERSION}\" | .timestamp = \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\"" meta.template.json > meta.json
           mv ./MediaDataHub.Plugin/bin/Release/net9.0/publish/MediaDataHub.Plugin.dll MediaDataHub.Plugin.dll
           zip -r media-data-hub.zip meta.json MediaDataHub.Plugin.dll
           md5sum media-data-hub.zip | head -c 32 > checksum
-        if: ${{ steps.release.outputs.release_created }}
       - run: gh release upload ${{ steps.release.outputs.tag_name }} media-data-hub.zip checksum
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: ${{ steps.release.outputs.release_created }}
